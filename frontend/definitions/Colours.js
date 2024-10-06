@@ -10,6 +10,7 @@ export default {
 
     GRAY_DARKER: 'rgba(57, 56, 57, 1)',
     GRAY_DARK: 'rgba(113, 112, 113, 1)',
+    GRAY_DARK_2: 'rgba(215, 215, 215, 1)',
     GRAY: 'rgba(226, 223, 226, 1)',
     GRAY_LIGHT: 'rgba(236, 234, 236, 1)',
     GRAY_LIGHTER: 'rgba(248, 247, 248, 1)',
@@ -29,6 +30,8 @@ export default {
     PRIMARY_DARK: 'rgba(219, 210, 20, 1)',
 
     ACCENT_1: 'rgba(4, 130, 184, 1)',
+    ACCENT_1_LIGHT: 'rgba(119, 169, 190, 1)',
+    ACCENT_1_LIGHTER: 'rgba(190, 236, 255, 1)',
 
     // Statuses
     SUCCESS_DARKER: 'rgba(83, 120, 7, 1)',

@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { Colours, Typography } from "../definitions";
 import Tabs from "../components/Tabs";
 import Button from "../components/Button";
+import Todo from "../components/Todo";
 import Link from "next/link";
 import apiFetch from '../functions/apiFetch';
 
@@ -83,9 +84,8 @@ const TodoList = ({ todos }) => {
     return (
         <ul>
             {todos.map(todo => (
-                // TODO: Create Todo Component
                 <li key={todo.id}>
-                    {todo.name}
+                    <Todo todo={todo}></Todo>
                 </li>
             ))}
         </ul>
