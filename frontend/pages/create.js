@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Colours, Typography } from '../definitions';
 import Button from '../components/Button';
@@ -15,6 +15,11 @@ const Create = () => {
     const [isSaving, setIsSaving] = useState(false);
     const todoState = useSelector((state) => state.todo);
     const dispatch = useDispatch();
+
+    // Clear alerts when the component mounts
+    useEffect(() => {
+        dispatch(clearTodoAlerts());
+    }, [dispatch]);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
