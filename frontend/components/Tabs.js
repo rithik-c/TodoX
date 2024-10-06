@@ -55,8 +55,9 @@ const Container = styled.div`
     flex-grow: 1;
     height: 100%;
     width: 100%;
-
+    
     .content {
+        margin-TOP: 0.5rem;
         display: flex;
         flex-direction: column;
         flex-grow: 1;
