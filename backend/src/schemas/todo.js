@@ -10,10 +10,14 @@ export default {
         "name": {
             "type": "string"
         },
+        // TODO: Create Redux actions and reducer for this property
+        "completed": {
+            "type": "boolean"
+        },
         "created": {
             "type": "string",
             "examples": ["2021-11-30T23:39:27.060Z"] 
         }
     },
-    "required": ["todoID", "userID", "name", "created"]
+    "required": ["todoID", "userID", "name", "completed", "created"]
 };
