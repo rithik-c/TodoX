@@ -46,10 +46,10 @@ const Todos = () => {
                     <ButtonContainer>
                         {/* TODO: Add filter functionality */}
                         <Link className="noLinkStyling" href="/">
-                            <Button className="filterButton" text="Filter" size="large" variant="primary" isFullWidth/>
+                            <Button className="backButton" text="Back" size="large" variant="secondary" isFullWidth/>
                         </Link>
                         <Link className="noLinkStyling" href="/">
-                            <Button className="backButton" text="Back" size="large" variant="primary" isFullWidth/>
+                            <Button className="filterButton" text="Filter" size="large" variant="primary" isFullWidth/>
                         </Link>
                     </ButtonContainer>
                 </div>
