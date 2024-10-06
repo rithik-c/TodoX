@@ -1,20 +1,41 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PageLayout from "../components/PageLayout";
 import styled from "styled-components";
 import { Colours, Typography } from "../definitions";
 import Tabs from "../components/Tabs";
 import Button from "../components/Button";
 import Link from "next/link";
+import apiFetch from '../functions/apiFetch';
 
 const Todos = () => {
 
-    // Temporary hardcoded todo data (DB connection goes here)
-    const todos = [
-        { id: 1, name: "Watch Blue Lock anime", completed: false },
-        { id: 2, name: "Finish Kinton leftovers", completed: false },
-        { id: 3, name: "Touch grass (optional)", completed: true },
-        { id: 4, name: "Pre-order Ghost of Yotei", completed: true },
-    ];
+    // API call to fetch todos of current user
+    const [todos, setTodos] = useState([]); // State to hold the fetched todos
+    const [loading, setLoading] = useState(true); // State to manage loading
+
+    // API call to fetch todos of the current user
+    useEffect(() => {
+        const fetchTodos = async () => {
+            try {
+                const response = await apiFetch("/todo", { method: "GET" }); // Fetch todos
+                if (response.status === 200) {
+                    setTodos(response.body.sort((a, b) => {
+                        return new Date(b.created) - new Date(a.created);
+                    })); // Sorting fetched todos by creation date
+                    console.log("Fetched todos:", response.body);
+
+                } else {
+                    console.error("Failed to fetch todos:", response.body);
+                }
+            } catch (error) {
+                console.error("Error fetching todos:", error);
+            } finally {
+                setLoading(false); // Set loading to false after fetching (use loading to show a loading spinner)
+            }
+        };
+        fetchTodos();
+    }, []); // Empty dependency array to run on mount
+
 
     // Will change to redux store later
     const [activeTab, setActiveTab] = useState("Incomplete");
