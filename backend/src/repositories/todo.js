@@ -11,6 +11,7 @@ export default (db) => {
     }
 
     return {
-        insertOne
+        insertOne,
+        findAll
     };
 };
