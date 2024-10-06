@@ -6,7 +6,8 @@ import getAuthHeaders from './functions/getAuthHeaders';
 
 export async function middleware(req, event) {
     // Prevent users that aren't signed in from accessing certain protected pages
-    if (req.nextUrl.pathname === '/' || req.nextUrl.pathname === '/create') {
+    const protectedPaths = ['/', '/create', '/todos'];
+    if (protectedPaths.includes(req.nextUrl.pathname)) {
         try {
             let response = await apiFetch("/user/session", {
                 headers: getAuthHeaders(req)
