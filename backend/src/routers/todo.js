@@ -23,7 +23,7 @@ export default ({todoRepository}) => {
                 ...req.body,
                 todoID,
                 userID: session.userID,
-                completed: false,
+                completed: false, // Adding default value for new todos completion status
                 created
             };
 
@@ -43,8 +43,10 @@ export default ({todoRepository}) => {
     // Get all todos from user ID
     router.get('/', auth, async (req, res) => {
         try {
+            // Verifying and decoding token to get userID
             let session = verifyToken(req.cookies['todox-session']);
 
+            // Using newly created repository function to only find todos for currently signed in user
             let todos = await todoRepository.findAll(session.userID);
             return res.status(200).send(todos);
         }

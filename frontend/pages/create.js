@@ -17,7 +17,7 @@ const Create = () => {
     const todoState = useSelector((state) => state.todo);
     const dispatch = useDispatch();
 
-    // Clear alerts when the component mounts
+    // Added useEffect to clear alerts when the component mounts (since the alert previously persisted when navigating away and back to create page)
     useEffect(() => {
         dispatch(clearTodoAlerts());
     }, [dispatch]);
@@ -52,10 +52,12 @@ const Create = () => {
                     <Alert message={todoState.alerts.success} onClose={() => dispatch(clearTodoAlerts())} variant="success" />
                     <Form onSubmit={handleSubmit}>
                         <InputField className="input" type="text" placeholder="Todo item name" required value={todoState.body.name} onChange={e => dispatch(updateTodoName({name: e.target.value}))} />
+                        {/* Chose to use a styled div for ButtonContainer to match current coding style and modify the button css and placement */}
                         <ButtonContainer>
                             <Link className="maxWidthCenter" href="/">
                                 <Button text="Back" size="large" variant="secondary" isFullWidth/>
                             </Link>
+                            {/* Created a back button for easier navigation. */}
                             <Button className="maxWidthCenter" type="submit" text="Save" size="large" variant="primary" disabled={isSaving || !todoState.body.name} isFullWidth />
                         </ButtonContainer>
                     </Form>

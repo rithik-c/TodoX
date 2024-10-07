@@ -8,6 +8,7 @@ import Todo from "../components/Todo";
 import Link from "next/link";
 import apiFetch from '../functions/apiFetch';
 
+// New page to view all todos of the current user
 const Todos = () => {
 
     // API call to fetch todos of current user
@@ -38,7 +39,7 @@ const Todos = () => {
     }, []); // Empty dependency array to run on mount
 
 
-    // Will change to redux store later
+    // TODO: Will change to redux store later maybe?
     const [activeTab, setActiveTab] = useState("Incomplete");
 
     // Define the tabs
@@ -80,6 +81,7 @@ const Todos = () => {
     );
 };
 
+// Made a separate object for the TodoList component for easier readability
 const TodoList = ({ todos }) => {
     return (
         <ul>
@@ -94,6 +96,8 @@ const TodoList = ({ todos }) => {
 
 export default Todos;
 
+
+// Chose to continue the pre-existing coding style of utilizing styled components
 const Container = styled.div`
     width: 100%;
 

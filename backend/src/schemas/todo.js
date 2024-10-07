@@ -10,7 +10,7 @@ export default {
         "name": {
             "type": "string"
         },
-        // TODO: Create Redux actions and reducer for this property
+        // Creating new 'completed' property to include in each todo's document data to persist status in the database
         "completed": {
             "type": "boolean"
         },

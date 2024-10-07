@@ -5,7 +5,7 @@ import getAuthHeaders from './functions/getAuthHeaders';
 
 
 export async function middleware(req, event) {
-    // Prevent users that aren't signed in from accessing certain protected pages
+    // Prevent users that aren't signed in from accessing certain protected pages (chose to store in list to keep if statement condition shorter)
     const protectedPaths = ['/', '/create', '/todos'];
     if (protectedPaths.includes(req.nextUrl.pathname)) {
         try {

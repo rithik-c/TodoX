@@ -4,11 +4,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { Colours } from '../definitions';
 
+// Created a new Todo component (and added some new colours to Colours definitions) to enhance UI for Tabs component (rather than using a plain list item)
 const Todo = ({todo}) => {
   return (
     <Container completed={todo.completed} onClick={() => {console.log("hii")}}>
         <p>{todo.name}</p>
         <IconContainer>
+            {/* Added icons for edit and delete to clean up UI */}
             <FontAwesomeIcon className="edit-icon" icon={faPenToSquare} onClick={() => {}} />
             <FontAwesomeIcon className="delete-icon" icon={faTrash} onClick={() => {}} />
         </IconContainer>
@@ -19,9 +21,9 @@ const Todo = ({todo}) => {
 export default Todo
 
 const Container = styled.div`
-    display: flex; /* Flexbox layout */
-    justify-content: space-between; /* Pushes icons to the right */
-    align-items: center; /* Centers items vertically */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     background: ${props => (props.completed ? `${Colours.ACCENT_1_LIGHT}` : `${Colours.ACCENT_1}`)};
     color: ${Colours.WHITE};
     padding: 0.9rem 1rem;
@@ -30,24 +32,24 @@ const Container = styled.div`
     cursor: pointer;
 
     p {
-        margin: 0; /* Remove default margin */
+        margin: 0;
         color: ${props => (props.completed ? `${Colours.GRAY_DARK_2}` : `${Colours.WHITE}`)};
         text-decoration: ${props => (props.completed ? 'line-through' : 'none')};
     }
 `;
 
 const IconContainer = styled.div`
-    display: inline-block; /* Use inline-block for the icon container */
+    display: inline-block;
     
     .edit-icon,
     .delete-icon {
         cursor: pointer;
-        margin-left: 0.75rem; /* Space between icons */
-        color: ${Colours.WHITE}; /* Ensure the icons are visible */
+        margin-left: 0.75rem;
+        color: ${Colours.WHITE};
     }
     
     .edit-icon:hover,
     .delete-icon:hover {
-        color: ${Colours.ACCENT_1_LIGHTER}; /* Ensure the icons are visible */
+        color: ${Colours.ACCENT_1_LIGHTER};
     }
 `;

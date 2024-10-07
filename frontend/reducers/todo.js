@@ -1,6 +1,12 @@
 const defaultState = {
     body: {
-        name: ""
+        name: "",
+        completed: false 
+        /**
+         * Added default value for new todos completion status for consistency but chose not to create new actions or reducer case to modify it.
+         * This is because this todo state stored in redux is only used to track state of a newly created todo.
+         * Thus, the completion status will never be anything but false in this stage.
+         */
     },
     alerts: {
         error: "",
