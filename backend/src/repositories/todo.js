@@ -11,8 +11,17 @@ export default (db) => {
         return await collection.find({userID}).toArray();
     }
 
+    // Added function to update the completion status of a todo given the todoID
+    async function updateCompletionStatus(todoID, completed) {
+        return await collection.updateOne(
+            { todoID }, // Find the todo by its ID
+            { $set: { completed } } // Update the completed property
+        );
+    }
+
     return {
         insertOne,
-        findAll
+        findAll,
+        updateCompletionStatus
     };
 };

@@ -38,6 +38,7 @@ export default {
     SUCCESS_DARK: 'rgba(124, 180, 11, 1)',
     SUCCESS: 'rgba(166, 240, 15, 1)',
     SUCCESS_NEON: 'rgba(184, 255, 38, 1)',
+    SUCCESS_NEON_2: 'rgba(35, 233, 0, 1)',
     SUCCESS_LIGHT: 'rgba(211, 248, 135, 1)',
     SUCCESS_LIGHTER: 'rgba(233, 251, 195, 1)',
     SUCCESS_LIGHTEST_2: 'rgba(246, 253, 231, 1)',
