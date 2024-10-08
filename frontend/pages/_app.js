@@ -1,12 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import Head from 'next/head';
 import configureStore from '../store/configureStore';
-
+import Modal from 'react-modal';
 
 // This default export is required in a new `pages/_app.js` file.
 export default function App({ Component, pageProps }) {
     const store = configureStore();
+
+    // Set the modal's app element to the Next.js root div for accessibility purposes (so screenreaders don't read the rest of the page)
+    useEffect(() => {
+        Modal.setAppElement('#__next');
+    }, []);
+
     return (
         <Provider store={store}>
             <Head>

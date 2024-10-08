@@ -66,7 +66,7 @@ const Todo = ({todo}) => {
             }}>
                 <h2>Edit Todo</h2>
                 <br/>
-                <input type="text" value={todo.name} />
+                <input type="text" value={todo.name} onChange={(e) => {}} />
                 <div>
                     <button onClick={() => toggleModal(currentState => !currentState)}>Close</button>
                     <button onClick={() => {}}>Save</button>
