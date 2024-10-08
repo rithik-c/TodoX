@@ -53,10 +53,7 @@ const Todo = ({todo}) => {
                 </Icons>
             </RightContainer>
 
-            <Modal
-            isOpen={modalIsOpen}
-            onRequestClose={() => toggleModal(currentState => !currentState)}
-            contentLabel="Edit Todo"
+            <Modal isOpen={modalIsOpen} onRequestClose={() => toggleModal(currentState => !currentState)} contentLabel="Edit Todo"
             style={{
                 content: {
                 top: '50%',
@@ -66,10 +63,14 @@ const Todo = ({todo}) => {
                 marginRight: '-50%',
                 transform: 'translate(-50%, -50%)',
                 },
-            }}
-            >
-            <h2>Edit Todo</h2>
-            <button onClick={() => toggleModal(currentState => !currentState)}>Close</button>
+            }}>
+                <h2>Edit Todo</h2>
+                <br/>
+                <input type="text" value={todo.name} />
+                <div>
+                    <button onClick={() => toggleModal(currentState => !currentState)}>Close</button>
+                    <button onClick={() => {}}>Save</button>
+                </div>
             </Modal>
 
         </Container>
