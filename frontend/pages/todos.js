@@ -7,13 +7,17 @@ import Button from "../components/Button";
 import Todo from "../components/Todo";
 import Link from "next/link";
 import apiFetch from '../functions/apiFetch';
+import { useDispatch, useSelector } from "react-redux";
+import { setTodos } from "../actions/todoList";
 
 // New page to view all todos of the current user
 const Todos = () => {
 
     // API call to fetch todos of current user
-    const [todos, setTodos] = useState([]); // State to hold the fetched todos
-    const [loading, setLoading] = useState(true); // State to manage loading
+    const todoListState = useSelector((state) => state.todoList); // State to hold the fetched todos
+    const dispatch = useDispatch();
+    const [activeTab, setActiveTab] = useState("Incomplete"); // Chose to not store in redux since it's only used in this component
+    const [loading, setLoading] = useState(true); // TODO: move this to extra branch and explain 'unused but implemented for futureproofing for scaling purposes' (State to manage loading)
 
     // API call to fetch todos of the current user
     useEffect(() => {
@@ -21,9 +25,9 @@ const Todos = () => {
             try {
                 const response = await apiFetch("/todo", { method: "GET" }); // Fetch todos
                 if (response.status === 200) {
-                    setTodos(response.body.sort((a, b) => {
+                    dispatch(setTodos(response.body.sort((a, b) => {
                         return new Date(b.created) - new Date(a.created);
-                    })); // Sorting fetched todos by creation date
+                    }))); // Sorting fetched todos by creation date
                     console.log("Fetched todos:", response.body);
 
                 } else {
@@ -39,22 +43,19 @@ const Todos = () => {
     }, []); // Empty dependency array to run on mount
 
 
-    // TODO: Will change to redux store later maybe?
-    const [activeTab, setActiveTab] = useState("Incomplete");
-
-    // Define the tabs
+    // Defining the tabs
     const tabs = [
         {
             title: "Incomplete",
             content: (
-                <TodoList todos={todos.filter(todo => !todo.completed)} />
+                <TodoList todos={todoListState.todos.filter(todo => !todo.completed)} />
             ),
             onClick: () => setActiveTab("Incomplete"),
         },
         {
             title: "All",
             content: (
-                <TodoList todos={todos} />
+                <TodoList todos={todoListState.todos} />
             ),
             onClick: () => setActiveTab("All"),
         },

@@ -5,28 +5,21 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { Colours } from '../definitions';
 import apiFetch from '../functions/apiFetch';
+import { useDispatch } from "react-redux";
+import { toggleTodoCompletion } from "../actions/todoList";
 
 // Created a new Todo component (and added some new colours to Colours definitions) to enhance UI for Tabs component (rather than using a plain list item)
-const Todo = ({todo, setTodos}) => {
+const Todo = ({todo}) => {
 
     // Chose to use react-modal since I noticed it was already installed in the project so the previous developer was probably planning to use it
     const [modalIsOpen, toggleModal] = useState(false);
-
-    const openModal = () => {
-        toggleModal(true);
-    };
-
-    const closeModal = () => {
-        toggleModal(false);
-    };
+    const dispatch = useDispatch();
 
     // I chose to use the PATCH method over PUT since I'm only partially updating the resource.
     // I also chose to code it in terms of toggling rather than a one-way 'completed' update so it can satisfy a second user story/purpose
     const toggleCompletion = async () => {
 
         try {
-            console.log(!todo.completed); // prints true correctly for incomplete todos
-            
             const response = await apiFetch(`/todo/${todo.todoID}`, {
                 method: "PATCH",
                 body: {
@@ -35,13 +28,8 @@ const Todo = ({todo, setTodos}) => {
             }); 
         
             if (response.status === 200) {
-                const updatedTodo = response.body; // Assuming the API returns the updated todo
-                setTodos((prevTodos) =>
-                    prevTodos.map((todoItem) =>
-                        todoItem.todoID === updatedTodo.todoID ? updatedTodo : todoItem // Update the local state with the updated todo
-                    )
-                );
-                console.log("Updated completion status of todo:", updatedTodo.name);
+                dispatch(toggleTodoCompletion(todo.todoID)); // Updating todo completion status in the redux store to match DB
+                console.log("Updated completion status of todo:", todo.name);
             } else {
                 console.error("Failed to update todo:", response.body);
             }
@@ -53,21 +41,21 @@ const Todo = ({todo, setTodos}) => {
     return (
         <Container completed={todo.completed}>
             <p className="todoTitle">{todo.name}</p>
-            {/* TODO: Tag for 'done' or 'not done', light red or green box with dark red/green outline and text */}
             <RightContainer>
                 <Tag completed={todo.completed}>
                     <p className="tagText">{todo.completed ? "done" : "not done"}</p>
                 </Tag>
+                {/* Added icons for edit and delete to clean up UI */}
                 <Icons>
-                    {/* Added icons for edit and delete to clean up UI */}
-                    <FontAwesomeIcon className="edit-icon" icon={faPenToSquare} onClick={openModal} />
+                    {/* Chose to use shorthand method style for onClick rather than create two unnecessary functions for openModal and closeModal */}
+                    <FontAwesomeIcon className="edit-icon" icon={faPenToSquare} onClick={() => toggleModal(currentState => !currentState)} />
                     <FontAwesomeIcon className="delete-icon" icon={faTrash} onClick={toggleCompletion} />
                 </Icons>
             </RightContainer>
 
             <Modal
             isOpen={modalIsOpen}
-            onRequestClose={closeModal}
+            onRequestClose={() => toggleModal(currentState => !currentState)}
             contentLabel="Edit Todo"
             style={{
                 content: {
@@ -81,8 +69,7 @@ const Todo = ({todo, setTodos}) => {
             }}
             >
             <h2>Edit Todo</h2>
-            <button onClick={closeModal}>Close</button>
-            {/* Add your form or content for editing the todo here */}
+            <button onClick={() => toggleModal(currentState => !currentState)}>Close</button>
             </Modal>
 
         </Container>
