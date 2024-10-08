@@ -2,6 +2,7 @@ import { createStore, combineReducers } from 'redux';
 import signIn from '../reducers/signIn';
 import signUp from '../reducers/signUp';
 import todo from '../reducers/todo';
+import todoList from '../reducers/todoList';
 
 
 let store;
@@ -15,7 +16,8 @@ export default () => {
         combineReducers({
             signIn,
             signUp,
-            todo
+            todo,
+            todoList
         })
     );
 
