@@ -87,7 +87,7 @@ const TodoList = ({ todos }) => {
     return (
         <ul>
             {todos.map(todo => (
-                <li key={todo.id}>
+                <li key={todo.todoID}>
                     <Todo todo={todo}></Todo>
                 </li>
             ))}
