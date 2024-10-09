@@ -19,9 +19,18 @@ export default (db) => {
         );
     }
 
+    // Added function to update the name of a todo given the todoID
+    async function updateTodoName(todoID, name) {
+        return await collection.updateOne(
+            { todoID }, // Find the todo by its ID
+            { $set: { name } } // Update the name property
+        );
+    }
+
     return {
         insertOne,
         findAll,
-        updateCompletionStatus
+        updateCompletionStatus,
+        updateTodoName
     };
 };
