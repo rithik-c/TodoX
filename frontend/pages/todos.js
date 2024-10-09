@@ -68,13 +68,13 @@ const Todos = () => {
                     <h1>My Todos</h1>
                     <Tabs tabs={tabs} activeTab={activeTab} />
                     <ButtonContainer>
-                        {/* TODO: Add filter functionality */}
                         <Link className="noLinkStyling" href="/">
                             <Button className="backButton" text="Back" size="large" variant="secondary" isFullWidth/>
                         </Link>
-                        <Link className="noLinkStyling" href="/">
+                        {/* TODO: Add filter functionality in the future */}
+                        {/* <Link className="noLinkStyling" href="/">
                             <Button className="filterButton" text="Filter" size="large" variant="primary" isFullWidth/>
-                        </Link>
+                        </Link> */}
                     </ButtonContainer>
                 </div>
             </Container>
@@ -119,7 +119,7 @@ const ButtonContainer = styled.div`
     justify-content: center;
     margin-top: 1.5rem;
     gap: 1rem;
-    width: 90%;
+    width: 35%;
     margin-left: auto;
     margin-right: auto;
 
