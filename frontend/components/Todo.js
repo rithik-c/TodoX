@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Colours, Typography } from '../definitions';
 import apiFetch from '../functions/apiFetch';
 import { useDispatch } from "react-redux";
-import { toggleTodoCompletion, renameTodo } from "../actions/todoList";
+import { toggleTodoCompletion, renameTodo, deleteTodo } from "../actions/todoList";
 import Button from './Button';
 
 // Created a new Todo component (and added some new colours to Colours definitions) to enhance UI for Tabs component (rather than using a plain list item)
@@ -76,6 +76,26 @@ const Todo = ({todo, activeTab}) => {
         }
     };
 
+    const removeTodo = async () => {
+        try {
+            const response = await apiFetch(`/todo/${todo.todoID}`, {
+                method: "DELETE"
+            });
+
+            if (response.status === 204) {
+                console.log("Deleted todo:", todo.name);
+                setIsVisible(false); // Hide the todo after 1 second so there's enough time for fade out transition
+                setTimeout(() => {
+                    dispatch(deleteTodo(todo.todoID)); // Delete todo from Redux store
+                }, 500);
+            } else {
+                console.error("Failed to delete todo:", response.body);
+            }
+        } catch (error) {
+            console.error("Error deleting todo:", error);
+        }
+    };
+
     const handleSave = () => {
         const newName = inputRef.current.value; // Grab the current value of the input field through ref
         
@@ -83,10 +103,13 @@ const Todo = ({todo, activeTab}) => {
         if (newName !== todo.name) updateTodo({name: newName});
         toggleModal(currentState => !currentState);
     };
-    
 
     return (
         <Container completed={completionStyle} isVisible={isVisible}>
+            <DeleteIcon onClick={removeTodo}>
+                <FontAwesomeIcon className="delete-icon" icon={"fa-circle-xmark"} />
+            </DeleteIcon>
+
             <p className="todoTitle">{todo.name}</p>
             <RightContainer>
                 <Tag completed={completionStyle}>
@@ -136,6 +159,24 @@ const Todo = ({todo, activeTab}) => {
 
 export default Todo;
 
+const DeleteIcon = styled.div`
+    position: absolute;
+    top: -0.75rem;
+    right: -0.75rem;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.1s ease;
+
+    .delete-icon {
+        color: ${Colours.ERROR_LIGHT_2};
+        width: 1.5rem;
+    }
+
+    .delete-icon:hover {
+        color: ${Colours.ERROR};
+    }
+`;
+
 const Container = styled.div`
     display: flex;
     justify-content: space-between;
@@ -147,6 +188,11 @@ const Container = styled.div`
     margin-bottom: 0.75rem;
     transition: background 0.5s ease, opacity 0.5s ease;
     opacity: ${props => (props.isVisible ? 1 : 0)};
+    position: relative;
+
+    &:hover ${DeleteIcon} {
+        opacity: 1;
+    }
 
     .todoTitle {
         margin: 0;

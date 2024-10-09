@@ -16,3 +16,9 @@ export const renameTodo = (todoID, name) => ({
     todoID,
     name,
 });
+
+// Action to delete a todo
+export const deleteTodo = (todoID) => ({
+    type: 'TODOS/DELETE',
+    todoID,
+});

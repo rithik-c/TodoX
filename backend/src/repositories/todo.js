@@ -27,10 +27,16 @@ export default (db) => {
         );
     }
 
+    // Added function to delete a todo given the todoID
+    async function deleteOne(todoID) {
+        return await collection.deleteOne({ todoID });
+    }
+
     return {
         insertOne,
         findAll,
         updateCompletionStatus,
-        updateTodoName
+        updateTodoName,
+        deleteOne
     };
 };

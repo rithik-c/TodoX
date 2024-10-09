@@ -101,6 +101,23 @@ export default ({todoRepository}) => {
             return res.status(500).send({ error: "Failed to update todo." });
         }
     });
+
+    router.delete('/:todoID', auth, async (req, res) => {
+        try {
+            let session = verifyToken(req.cookies['todox-session']);
+            const { todoID } = req.params;
+
+            let result = await todoRepository.deleteOne(todoID);
+
+            if (result) {
+                return res.sendStatus(204); // No Content response (successfully deleted)
+            }
+            return res.status(404).send({ error: "Todo not found." });
+        } catch (err) {
+            console.error(err);
+            return res.status(500).send({ error: "Failed to delete todo." });
+        }
+    });
     
     return router;
 }

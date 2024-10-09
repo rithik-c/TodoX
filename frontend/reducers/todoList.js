@@ -22,7 +22,7 @@ export default (state = defaultState, action) => {
                 ),
             };
 
-    case 'TODOS/RENAME':
+        case 'TODOS/RENAME':
             return {
                 ...state,
                 todos: state.todos.map(todo =>
@@ -32,7 +32,12 @@ export default (state = defaultState, action) => {
                 ),
             };
 
-        // TODO: add new feature on separate branch: delete todo
+        case 'TODOS/DELETE':
+            return {
+                ...state,
+                todos: state.todos.filter(todo => todo.todoID !== action.todoID),
+            };
+            
         default:
             return state;
     }

@@ -52,6 +52,7 @@ export default {
     ERROR_NEON: 'rgba(241, 40, 45, 1)',
     ERROR: 'rgba(225, 60, 64, 1)',
     ERROR_LIGHT: 'rgba(240, 157, 159, 1)',
+    ERROR_LIGHT_2: 'rgba(225, 94, 97, 1)',
     ERROR_LIGHTER: 'rgba(247, 206, 207, 1)',
     ERROR_LIGHTEST_2: 'rgba(252, 235, 236, 1)',
 
