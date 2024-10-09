@@ -6,7 +6,7 @@ import { Colours, Typography } from '../definitions';
 import apiFetch from '../functions/apiFetch';
 import { useDispatch } from "react-redux";
 import { toggleTodoCompletion, renameTodo } from "../actions/todoList";
-import Button from './Button'; // Import your Button component
+import Button from './Button';
 
 // Created a new Todo component (and added some new colours to Colours definitions) to enhance UI for Tabs component (rather than using a plain list item)
 const Todo = ({todo, activeTab}) => {
@@ -16,7 +16,7 @@ const Todo = ({todo, activeTab}) => {
     const [inputValue, setInputValue] = useState(todo.name); // Local state for rename modal input field
     const [isVisible, setIsVisible] = useState(true); // Manage visibility for todo (for smooth animations)
     const [completionStyle, setCompletionStyle] = useState(todo.completed); // State to manage completion css styling (separate from redux global completion state, for local UI changes and easier implementation of css transitions)
-    const inputRef = useRef(null); // Use ref to track current input field value
+    const inputRef = useRef(null); // Using ref to track current input field value
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -51,7 +51,7 @@ const Todo = ({todo, activeTab}) => {
                     if (activeTab === "Incomplete") {
                         
                         setTimeout(() => {
-                            setIsVisible(false); // Hide the todo after 1 second
+                            setIsVisible(false); // Hide the todo after 1 second so there's enough time for transitions to run
                             setTimeout(() => {
                                 // I Chose to code this in terms of toggling rather than a one-way 'completed' update so it can satisfy a second user story/purpose
                                 dispatch(toggleTodoCompletion(todo.todoID)); // Update completion status in Redux store
