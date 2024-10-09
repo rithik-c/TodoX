@@ -6,7 +6,8 @@ const defaultState = {
     alerts: {
         error: "",
         success: ""
-    }
+    },
+    isSignedIn: false
 };
 
 
@@ -42,7 +43,8 @@ export default (state = defaultState, action) => {
                 alerts: {
                     ...defaultState.alerts,
                     success: action.success
-                }
+                },
+                isSignedIn: true
             };
         case 'SIGN-IN/CLEAR-ALERTS':
             return {
