@@ -9,3 +9,10 @@ export const toggleTodoCompletion = (todoID) => ({
     type: 'TODOS/TOGGLE_COMPLETION',
     todoID,
 });
+
+// Action to rename a todo
+export const renameTodo = (todoID, name) => ({
+    type: 'TODOS/RENAME',
+    todoID,
+    name,
+});
