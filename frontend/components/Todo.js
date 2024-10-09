@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Modal from 'react-modal';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -18,6 +18,20 @@ const Todo = ({todo, activeTab}) => {
     const [completionStyle, setCompletionStyle] = useState(todo.completed); // State to manage completion css styling (separate from redux global completion state, for local UI changes and easier implementation of css transitions)
     const inputRef = useRef(null); // Use ref to track current input field value
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (modalIsOpen) {
+            // Delay focusing the input to ensure inputRef component is rendered first
+            const timer = setTimeout(() => {
+                if (inputRef.current) {
+                    inputRef.current.focus();
+                }
+            }, 0); // Delay of 0 ms will push the focus to the end of the call stack
+    
+            // Cleanup function to clear the timeout if modal is closed before the timer runs
+            return () => clearTimeout(timer);
+        }
+    }, [modalIsOpen]);
 
     // I initially had two separate API-callback/state-change functions for toggling completion and editing name for readability, but I combined them to reduce code redundancy and encourage reusability
     const updateTodo = async (updates) => {
@@ -87,7 +101,7 @@ const Todo = ({todo, activeTab}) => {
                 </Icons>
             </RightContainer>
 
-            <Modal isOpen={modalIsOpen} onRequestClose={() => toggleModal(currentState => !currentState)} contentLabel="Edit Todo"
+            <Modal isOpen={modalIsOpen} shouldCloseOnOverlayClick={true} onRequestClose={() => toggleModal(currentState => !currentState)} contentLabel="Edit Todo"
             style={{
                 overlay: {
                     backgroundColor: 'rgba(0, 0, 0, 0.5)'  // Dark overlay to help create focus
@@ -109,7 +123,7 @@ const Todo = ({todo, activeTab}) => {
             }}>
                 <ModalContent>
                     <h2>Edit Todo</h2>
-                    <StyledInput type="text" defaultValue={inputValue} ref={inputRef} placeholder="Enter new todo name"/>
+                    <StyledInput type="text" defaultValue={inputValue} ref={inputRef} placeholder="Enter new todo name" onKeyDown={(e) => {if (e.key === 'Enter') handleSave()}}/>
                     <ButtonContainer>
                         <Button text="Close" onClick={() => toggleModal(currentState => !currentState)} variant="neutral-light" size="large"/>
                         <Button text="Save" onClick={handleSave} variant="accent" size="large"/>

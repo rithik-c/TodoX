@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import styled from 'styled-components';
 import { Colours, Typography } from '../definitions';
 
 
 // Custom styled input fields, use the "type" prop to control which HTML input type is rendered
-const InputField = ({className, type, value, label, placeholder, size="medium", variant="neutral", disabled=false, ...otherProps}) => {
+const InputField = forwardRef(({className, type, value, label, placeholder, size="medium", variant="neutral", disabled=false, ...otherProps}, ref) => {
     return (
         <Container className={className} type={type} size={size} variant={variant} disabled={disabled}>
             <label className="formLabel">
@@ -15,15 +15,15 @@ const InputField = ({className, type, value, label, placeholder, size="medium", 
                 <div className="inputContainer">
                     {
                         (type === "textarea" &&
-                        <textarea className="formField" value={value} disabled={disabled} placeholder={placeholder} {...otherProps} />)
+                        <textarea className="formField" value={value} disabled={disabled} placeholder={placeholder} ref={ref} {...otherProps} />)
                         ||
-                        (<input className={`formField`} type={type} value={value} disabled={disabled} placeholder={placeholder} {...otherProps} />)
+                        (<input className={`formField`} type={type} value={value} disabled={disabled} placeholder={placeholder} ref={ref} {...otherProps} />)
                     }
                 </div>
             </label>
         </Container>
     );
-};
+});
 
 export default InputField;
 

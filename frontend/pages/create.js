@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
 import { Colours, Typography } from '../definitions';
 import Button from '../components/Button';
@@ -15,7 +15,15 @@ import Link from 'next/link';
 const Create = () => {
     const [isSaving, setIsSaving] = useState(false);
     const todoState = useSelector((state) => state.todo);
+    const inputRef = useRef(null);
     const dispatch = useDispatch();
+
+    // Automatically Focused the input field when the component mounts (also updated inputField component to accept ref)
+    useEffect(() => {
+        if (inputRef.current) {
+            inputRef.current.focus();
+        }
+    }, []);
 
     // Added useEffect to clear alerts when the component mounts (since the alert previously persisted when navigating away and back to create page)
     useEffect(() => {
@@ -51,7 +59,7 @@ const Create = () => {
                     <Alert message={todoState.alerts.error} onClose={() => dispatch(clearTodoAlerts())} />
                     <Alert message={todoState.alerts.success} onClose={() => dispatch(clearTodoAlerts())} variant="success" />
                     <Form onSubmit={handleSubmit}>
-                        <InputField className="input" type="text" placeholder="Todo item name" required value={todoState.body.name} onChange={e => dispatch(updateTodoName({name: e.target.value}))} />
+                        <InputField className="input" type="text" placeholder="Todo item name" required value={todoState.body.name} ref={inputRef} onChange={e => dispatch(updateTodoName({name: e.target.value}))} />
                         {/* Chose to use a styled div for ButtonContainer to match current coding style and modify the button css and placement */}
                         <ButtonContainer>
                             <Link className="maxWidthCenter" href="/">
