@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import Modal from 'react-modal';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -6,30 +6,38 @@ import { faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { Colours } from '../definitions';
 import apiFetch from '../functions/apiFetch';
 import { useDispatch } from "react-redux";
-import { toggleTodoCompletion } from "../actions/todoList";
+import { toggleTodoCompletion, renameTodo } from "../actions/todoList";
 
 // Created a new Todo component (and added some new colours to Colours definitions) to enhance UI for Tabs component (rather than using a plain list item)
 const Todo = ({todo}) => {
 
     // Chose to use react-modal since I noticed it was already installed in the project so the previous developer was probably planning to use it
     const [modalIsOpen, toggleModal] = useState(false);
+    const [inputValue, setInputValue] = useState(todo.name); // Local state for rename modal input field
+    const inputRef = useRef(null); // Use ref to track current input field value
     const dispatch = useDispatch();
 
-    // I chose to use the PATCH method over PUT since I'm only partially updating the resource.
-    // I also chose to code it in terms of toggling rather than a one-way 'completed' update so it can satisfy a second user story/purpose
-    const toggleCompletion = async () => {
-
+    // I initially had two separate API-callback/state-change functions for toggling completion and editing name for readability, but I combined them to reduce code redundancy and encourage reusability
+    const updateTodo = async (updates) => {
         try {
+            // I chose to use the PATCH method over PUT since I'm only partially updating the resource.
             const response = await apiFetch(`/todo/${todo.todoID}`, {
                 method: "PATCH",
-                body: {
-                    completed: !todo.completed
-                }                 
-            }); 
-        
+                body: updates
+            });
+            
             if (response.status === 200) {
-                dispatch(toggleTodoCompletion(todo.todoID)); // Updating todo completion status in the redux store to match DB
-                console.log("Updated completion status of todo:", todo.name);
+                // Dispatch appropriate action based on which updates were made
+                if (updates.completed !== undefined) {
+                    // I Chose to code this in terms of toggling rather than a one-way 'completed' update so it can satisfy a second user story/purpose
+                    dispatch(toggleTodoCompletion(todo.todoID)); // Update completion status in Redux store
+                    console.log("Updated completion status of todo:", todo.name);
+                }
+                if (updates.name !== undefined) {
+                    dispatch(renameTodo(todo.todoID, updates.name)); // Dispatch action for name update
+                    setInputValue(updates.name); // Setting default rename modal input field text only if API call was successful so state isnt out of sync if API call fails
+                    console.log("Updated name of todo:", updates.name);
+                }
             } else {
                 console.error("Failed to update todo:", response.body);
             }
@@ -37,6 +45,17 @@ const Todo = ({todo}) => {
             console.error("Error updating todo:", error);
         }
     };
+
+    const handleSave = () => {
+        const newName = inputRef.current.value; // Grab the current value of the input field through ref
+        
+        // I chose to update the todo only if the input value is different to prevent unnecessary API calls
+        if (newName !== todo.name) {
+            updateTodo({name: newName});
+            toggleModal(currentState => !currentState);
+        }
+    };
+    
 
     return (
         <Container completed={todo.completed}>
@@ -48,8 +67,9 @@ const Todo = ({todo}) => {
                 {/* Added icons for edit and delete to clean up UI */}
                 <Icons>
                     {/* Chose to use shorthand method style for onClick rather than create two unnecessary functions for openModal and closeModal */}
+                    {/* Also using a functional approach over direct to avoid stale states and prevent asynchronous syncing issues */}
                     <FontAwesomeIcon className="edit-icon" icon={faPenToSquare} onClick={() => toggleModal(currentState => !currentState)} />
-                    <FontAwesomeIcon className="delete-icon" icon={faTrash} onClick={toggleCompletion} />
+                    <FontAwesomeIcon className="delete-icon" icon={faTrash} onClick={() => updateTodo({ completed: !todo.completed })} />
                 </Icons>
             </RightContainer>
 
@@ -66,10 +86,10 @@ const Todo = ({todo}) => {
             }}>
                 <h2>Edit Todo</h2>
                 <br/>
-                <input type="text" value={todo.name} onChange={(e) => {}} />
+                <input type="text" defaultValue={inputValue} ref={inputRef} />
                 <div>
                     <button onClick={() => toggleModal(currentState => !currentState)}>Close</button>
-                    <button onClick={() => {}}>Save</button>
+                    <button onClick={handleSave}>Save</button>
                 </div>
             </Modal>
 
