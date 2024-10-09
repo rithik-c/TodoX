@@ -43,7 +43,7 @@ const SignUp = () => {
             
             if (response.status === 201) {
                 dispatch(clearSignUp());
-                dispatch(updateSignUpSuccess({ sucess: "Account creation successful, redirecting..." }));
+                dispatch(updateSignUpSuccess({ success: "Account creation successful, redirecting..." })); // Corrected starter code typo
 
                 router.replace("/");
             }
