@@ -3,7 +3,7 @@ import Modal from 'react-modal';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPenToSquare, faSquare, faSquareCheck } from '@fortawesome/free-solid-svg-icons'
-import { Colours } from '../definitions';
+import { Colours, Typography } from '../definitions';
 import apiFetch from '../functions/apiFetch';
 import { useDispatch } from "react-redux";
 import { toggleTodoCompletion, renameTodo } from "../actions/todoList";
@@ -50,10 +50,8 @@ const Todo = ({todo}) => {
         const newName = inputRef.current.value; // Grab the current value of the input field through ref
         
         // I chose to update the todo only if the input value is different to prevent unnecessary API calls
-        if (newName !== todo.name) {
-            updateTodo({name: newName});
-            toggleModal(currentState => !currentState);
-        }
+        if (newName !== todo.name) updateTodo({name: newName});
+        toggleModal(currentState => !currentState);
     };
     
 
@@ -73,25 +71,45 @@ const Todo = ({todo}) => {
                 </Icons>
             </RightContainer>
 
-            <Modal isOpen={modalIsOpen} onRequestClose={() => toggleModal(currentState => !currentState)} contentLabel="Edit Todo"
-            style={{
-                content: {
-                top: '50%',
-                left: '50%',
-                right: 'auto',
-                bottom: 'auto',
-                marginRight: '-50%',
-                transform: 'translate(-50%, -50%)',
-                },
-            }}>
-                <h2>Edit Todo</h2>
-                <br/>
-                <input type="text" defaultValue={inputValue} ref={inputRef} />
-                <div>
-                    <button onClick={() => toggleModal(currentState => !currentState)}>Close</button>
-                    <button onClick={handleSave}>Save</button>
-                </div>
+            <Modal 
+                isOpen={modalIsOpen} 
+                onRequestClose={() => toggleModal(currentState => !currentState)} 
+                contentLabel="Edit Todo"
+                style={{
+                    overlay: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.5)'  // Dark overlay to create focus
+                    },
+                    content: {
+                        top: '50%',
+                        left: '50%',
+                        right: 'auto',
+                        bottom: 'auto',
+                        marginRight: '-50%',
+                        transform: 'translate(-50%, -50%)',
+                        backgroundColor: `${Colours.ACCENT_2_LIGHT}`,
+                        border: 'none',
+                        borderRadius: '15px',
+                        padding: '2rem',
+                        boxShadow: '0 4px 15px rgba(0, 0, 0, 0.1)',
+                        width: '400px',  // Adjust width for better visual fit
+                    }
+                }}
+            >
+                <ModalContent>
+                    <h2>Edit Todo</h2>
+                    <StyledInput 
+                        type="text" 
+                        defaultValue={inputValue} 
+                        ref={inputRef} 
+                        placeholder="Enter new todo name"
+                    />
+                    <ButtonContainer>
+                        <StyledButton onClick={() => toggleModal(currentState => !currentState)}>Close</StyledButton>
+                        <StyledButton primary onClick={handleSave}>Save</StyledButton>
+                    </ButtonContainer>
+                </ModalContent>
             </Modal>
+
 
         </Container>
     );
@@ -148,5 +166,56 @@ const Icons = styled.div`
     .edit-icon:hover,
     .delete-icon:hover {
         color: ${Colours.ACCENT_1_LIGHTER};
+    }
+`;
+
+const ModalContent = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    h2 {
+        color: ${Colours.BLACK};
+        font-size: ${Typography.HEADING_SIZES.XS};
+        font-weight: ${Typography.WEIGHTS.SEMIBOLD};
+    }
+`;
+
+const StyledInput = styled.input`
+    padding: 0.75rem 1rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    width: 100%;
+    border: 1px solid ${Colours.GRAY};
+    border-radius: 8px;
+    font-size: 1rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.2s ease;
+
+    &:focus {
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
+        outline: none;
+    }
+`;
+
+const ButtonContainer = styled.div`
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+`;
+
+const StyledButton = styled.button`
+    padding: 0.75rem 3rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    background-color: ${props => props.primary ? Colours.ACCENT_1 : Colours.GRAY_LIGHT};
+    color: ${props => props.primary ? Colours.WHITE : Colours.BLACK};
+    transition: background-color 0.2s ease, color 0.2s ease;
+
+    &:hover {
+        background-color: ${props => props.primary ? Colours.ACCENT_1_LIGHT_2 : Colours.GRAY};
     }
 `;

@@ -28,6 +28,7 @@ export default {
     WEIGHTS: {
         LIGHT: 300,
         REGULAR: 400,
+        SEMIBOLD: 500,
         BOLD: 700
     },
 };

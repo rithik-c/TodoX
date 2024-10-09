@@ -31,6 +31,7 @@ export default {
 
     ACCENT_1: 'rgba(4, 130, 184, 1)',
     ACCENT_1_LIGHT: 'rgba(119, 169, 190, 1)',
+    ACCENT_1_LIGHT_2: 'rgba(0, 147, 210, 1)',
     ACCENT_1_LIGHTER: 'rgba(190, 236, 255, 1)',
 
     // Statuses
