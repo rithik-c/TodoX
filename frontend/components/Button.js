@@ -72,6 +72,12 @@ const ButtonElement = styled.button`
                     color: ${Colours.WHITE};
                 `;
             }
+            else if (props.variant === "accent") { // Added new button theme for accents (for more variety)
+                return `
+                    background-color: ${Colours.ACCENT_1};
+                    color: ${Colours.WHITE};
+                `;
+            }
             else if (props.variant === "neutral-light") {
                 return `
                     background-color: ${Colours.BLACK_LIGHTEST_0};
@@ -100,6 +106,11 @@ const ButtonElement = styled.button`
                         background-color: ${Colours.BLACK_LIGHT};
                     `;
                 }
+                else if (props.variant === "accent") {
+                    return `
+                        background-color: ${Colours.ACCENT_1_LIGHT_2};
+                    `;
+                }
                 else if (props.variant === "neutral-light") {
                     return `
                         background-color: ${Colours.BLACK_LIGHTEST_1};
@@ -124,6 +135,11 @@ const ButtonElement = styled.button`
                 else if (props.variant === "secondary") {
                     return `
                         background-color: ${Colours.BLACK_LIGHT};
+                    `;
+                }
+                else if (props.variant === "accent") {
+                    return `
+                        background-color: ${Colours.ACCENT_1_LIGHT_2};
                     `;
                 }
                 else if (props.variant === "neutral-light") {
