@@ -4,7 +4,7 @@ import { Colours, Typography } from '../definitions';
 
 
 // Custom styled input fields, use the "type" prop to control which HTML input type is rendered
-const InputField = forwardRef(({className, type, value, label, placeholder, size="medium", variant="neutral", disabled=false, ...otherProps}, ref) => {
+const InputField = forwardRef(({className, type, value, label, placeholder, size="medium", variant="neutral", disabled=false, icon, ...otherProps}, ref) => {
     return (
         <Container className={className} type={type} size={size} variant={variant} disabled={disabled}>
             <label className="formLabel">
@@ -19,6 +19,7 @@ const InputField = forwardRef(({className, type, value, label, placeholder, size
                         ||
                         (<input className={`formField`} type={type} value={value} disabled={disabled} placeholder={placeholder} ref={ref} {...otherProps} />)
                     }
+                    {icon && <div className="iconContainer">{icon}</div>}
                 </div>
             </label>
         </Container>
@@ -160,6 +161,11 @@ const Container = styled.div`
                 `;
             }
         
-        }
+        }}
+    }
+
+    .iconContainer {
+        position: relative;
+        cursor: pointer;
     }
 `;
