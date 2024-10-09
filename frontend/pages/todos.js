@@ -47,16 +47,24 @@ const Todos = () => {
     const tabs = [
         {
             title: "Incomplete",
-            content: (
-                <TodoList todos={todoListState.todos.filter(todo => !todo.completed)} activeTab={activeTab}/>
-            ),
+            content: (() => {
+                const incompleteTodos = todoListState.todos.filter(todo => !todo.completed);
+    
+                if (todoListState.todos.length === 0) {
+                    return <h2>You haven't made any Todos yet!</h2>;
+                } else if (incompleteTodos.length === 0) {
+                    return <h2>You're all caught up!</h2>;
+                } else {
+                    return <TodoList todos={incompleteTodos} activeTab={activeTab} />;
+                }
+            })(),
             onClick: () => setActiveTab("Incomplete"),
         },
         {
             title: "All",
-            content: (
-                <TodoList todos={todoListState.todos} activeTab={activeTab}/>
-            ),
+            content: todoListState.todos.length === 0
+            ? <h2>You haven't made any Todos yet!</h2>
+            : <TodoList todos={todoListState.todos} activeTab={activeTab} />,
             onClick: () => setActiveTab("All"),
         },
     ];
