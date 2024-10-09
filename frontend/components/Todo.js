@@ -160,12 +160,12 @@ const Tag = styled.div`
 const Icons = styled.div`
     display: flex;
     align-items: center;
+    width: 3.5rem;
     
     .edit-icon,
     .checkbox-icon {
         cursor: pointer;
         margin-left: 0.5rem;
-        font-size: 1.25rem;
         color: ${Colours.WHITE};
     }
     
