@@ -56,32 +56,79 @@ export default ({todoRepository}) => {
         }
     });
 
-    // Update the completion status of a todo
+    // Updating an existing todo (initially had separate paths for updating name and completion status, but then my brain cells started working again and I combined them)
     router.patch('/:todoID', auth, async (req, res) => {
         try {
             let session = verifyToken(req.cookies['todox-session']);
             const { todoID } = req.params; // Getting todoID from the URL
-            const { completed } = req.body; // Getting the new completed value from the request body
+            const todoUpdate = req.body || {}; // Getting the updated fields from the request body
+    
+            // Create an array to hold promises for updates
+            const updatePromises = [];
 
-            // Validate that the completed field is a boolean (just in case, for future-proofing)
-            if (typeof completed !== 'boolean') {
-                return res.status(400).send({ error: "Invalid 'completed' value. It must be a boolean." });
+            // Check for completed field and validate if provided
+            if (todoUpdate.hasOwnProperty('completed')) { 
+                if (typeof todoUpdate.completed !== 'boolean') {
+                    return res.status(400).send({ error: "Invalid 'completed' value. It must be a boolean." });
+                }
+                updatePromises.push(todoRepository.updateCompletionStatus(todoID, todoUpdate.completed));
             }
 
-            // Update the completion status using the repository function
-            const result = await todoRepository.updateCompletionStatus(todoID, completed);
-            
-            // Check if the update was performed
-            if (result.modifiedCount > 0) {
+            // Check for name field and validate if provided
+            if (todoUpdate.hasOwnProperty('name')) { 
+                if (typeof todoUpdate.name !== 'string' || todoUpdate.name.trim() === '') {
+                    return res.status(400).send({ error: "Invalid 'name' value. It must be a non-empty string." });
+                }
+                updatePromises.push(todoRepository.updateTodoName(todoID, todoUpdate.name));
+            }
+    
+            // Future-proofing -> Handle additional fields in the same way...
+            // if (todoUpdate.hasOwnProperty(otherField)) {
+            //     // Validate and push update function for otherField
+            // }
+    
+            // Execute all update promises
+            const results = await Promise.all(updatePromises);
+    
+            // Check if at least one update was performed
+            if (results.length > 0) {
                 return res.status(200).send({ message: "Todo updated successfully." });
             } else {
-                return res.status(404).send({ error: "Todo not found." });
+                return res.status(404).send({ error: "Todo not found or no fields to update." });
             }
         } catch (err) {
             console.error(err);
             return res.status(500).send({ error: "Failed to update todo." });
         }
     });
+    
+
+    // Updating an existing todo (initially had separate paths for updating name and completion status, but then my brain cells started working again and I combined them)
+    // router.patch('/:todoID', auth, async (req, res) => {
+    //     try {
+    //         let session = verifyToken(req.cookies['todox-session']);
+    //         const { todoID } = req.params; // Getting todoID from the URL
+    //         const { completed } = req.body; // Getting the new completed value from the request body
+
+    //         // Validate that the completed field is a boolean (just in case, for future-proofing)
+    //         if (typeof completed !== 'boolean') {
+    //             return res.status(400).send({ error: "Invalid 'completed' value. It must be a boolean." });
+    //         }
+
+    //         // Update the completion status using the repository function
+    //         const result = await todoRepository.updateCompletionStatus(todoID, completed);
+            
+    //         // Check if the update was performed
+    //         if (result.modifiedCount > 0) {
+    //             return res.status(200).send({ message: "Todo updated successfully." });
+    //         } else {
+    //             return res.status(404).send({ error: "Todo not found." });
+    //         }
+    //     } catch (err) {
+    //         console.error(err);
+    //         return res.status(500).send({ error: "Failed to update todo." });
+    //     }
+    // });
 
     return router;
 }
