@@ -9,11 +9,13 @@ import { toggleTodoCompletion, renameTodo } from "../actions/todoList";
 import Button from './Button'; // Import your Button component
 
 // Created a new Todo component (and added some new colours to Colours definitions) to enhance UI for Tabs component (rather than using a plain list item)
-const Todo = ({todo}) => {
+const Todo = ({todo, activeTab}) => {
 
     // Chose to use react-modal since I noticed it was already installed in the project so the previous developer was probably planning to use it
     const [modalIsOpen, toggleModal] = useState(false);
     const [inputValue, setInputValue] = useState(todo.name); // Local state for rename modal input field
+    const [isVisible, setIsVisible] = useState(true); // Manage visibility for todo (for smooth animations)
+    const [completionStyle, setCompletionStyle] = useState(todo.completed); // State to manage completion css styling (separate from redux global completion state, for local UI changes and easier implementation of css transitions)
     const inputRef = useRef(null); // Use ref to track current input field value
     const dispatch = useDispatch();
 
@@ -29,8 +31,22 @@ const Todo = ({todo}) => {
             if (response.status === 200) {
                 // Dispatch appropriate action based on which updates were made
                 if (updates.completed !== undefined) {
-                    // I Chose to code this in terms of toggling rather than a one-way 'completed' update so it can satisfy a second user story/purpose
-                    dispatch(toggleTodoCompletion(todo.todoID)); // Update completion status in Redux store
+
+                    setCompletionStyle(updates.completed); // Set completion style to true for smooth transition purposes
+
+                    if (activeTab === "Incomplete") {
+                        
+                        setTimeout(() => {
+                            setIsVisible(false); // Hide the todo after 1 second
+                            setTimeout(() => {
+                                // I Chose to code this in terms of toggling rather than a one-way 'completed' update so it can satisfy a second user story/purpose
+                                dispatch(toggleTodoCompletion(todo.todoID)); // Update completion status in Redux store
+                            }, 500);
+                        }, 500);
+                    } else {
+                        dispatch(toggleTodoCompletion(todo.todoID));
+                    }
+                        
                     console.log("Updated completion status of todo:", todo.name);
                 }
                 if (updates.name !== undefined) {
@@ -56,18 +72,18 @@ const Todo = ({todo}) => {
     
 
     return (
-        <Container completed={todo.completed}>
+        <Container completed={completionStyle} isVisible={isVisible}>
             <p className="todoTitle">{todo.name}</p>
             <RightContainer>
-                <Tag completed={todo.completed}>
-                    <p className="tagText">{todo.completed ? "done" : "not done"}</p>
+                <Tag completed={completionStyle}>
+                    <p className="tagText">{completionStyle ? "done" : "not done"}</p>
                 </Tag>
                 {/* Added icons for edit and delete to clean up UI */}
                 <Icons>
                     {/* Chose to use shorthand method style for onClick rather than create two unnecessary functions for openModal and closeModal */}
                     {/* Also using a functional approach over direct to avoid stale states and prevent asynchronous syncing issues */}
                     <FontAwesomeIcon className="edit-icon" icon={"fa-pen-to-square"} onClick={() => toggleModal(currentState => !currentState)} />
-                    <FontAwesomeIcon className="checkbox-icon" icon={todo.completed ? "fa-square-check" : "fa-square"} onClick={() => updateTodo({ completed: !todo.completed })} />
+                    <FontAwesomeIcon className="checkbox-icon" icon={completionStyle ? "fa-square-check" : "fa-square"} onClick={() => updateTodo({ completed: !todo.completed })} />
                 </Icons>
             </RightContainer>
 
@@ -115,7 +131,8 @@ const Container = styled.div`
     padding: 0.9rem 1rem;
     border-radius: 15px;
     margin-bottom: 0.75rem;
-    transition: background 0.5s ease;
+    transition: background 0.5s ease, opacity 0.5s ease;
+    opacity: ${props => (props.isVisible ? 1 : 0)};
 
     .todoTitle {
         margin: 0;

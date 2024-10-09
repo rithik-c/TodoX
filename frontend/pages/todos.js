@@ -17,7 +17,7 @@ const Todos = () => {
     const todoListState = useSelector((state) => state.todoList); // State to hold the fetched todos
     const dispatch = useDispatch();
     const [activeTab, setActiveTab] = useState("Incomplete"); // Chose to not store in redux since it's only used in this component
-    const [loading, setLoading] = useState(true); // TODO: move this to extra branch and explain 'unused but implemented for futureproofing for scaling purposes' (State to manage loading)
+    const [loading, setLoading] = useState(true); // TODO: Unused but implemented for futureproofing for scaling purposes (State to manage loading)
 
     // API call to fetch todos of the current user
     useEffect(() => {
@@ -36,7 +36,7 @@ const Todos = () => {
             } catch (error) {
                 console.error("Error fetching todos:", error);
             } finally {
-                setLoading(false); // Set loading to false after fetching (use loading to show a loading spinner)
+                setLoading(false); // TODO: Set loading to false after fetching (can use loading to show a loading spinner)
             }
         };
         fetchTodos();
@@ -48,14 +48,14 @@ const Todos = () => {
         {
             title: "Incomplete",
             content: (
-                <TodoList todos={todoListState.todos.filter(todo => !todo.completed)} />
+                <TodoList todos={todoListState.todos.filter(todo => !todo.completed)} activeTab={activeTab}/>
             ),
             onClick: () => setActiveTab("Incomplete"),
         },
         {
             title: "All",
             content: (
-                <TodoList todos={todoListState.todos} />
+                <TodoList todos={todoListState.todos} activeTab={activeTab}/>
             ),
             onClick: () => setActiveTab("All"),
         },
@@ -71,7 +71,7 @@ const Todos = () => {
                         <Link className="noLinkStyling" href="/">
                             <Button className="backButton" text="Back" size="large" variant="secondary" isFullWidth/>
                         </Link>
-                        {/* TODO: Add filter functionality in the future */}
+                        {/* TODO: Can add filter functionality in the future */}
                         {/* <Link className="noLinkStyling" href="/">
                             <Button className="filterButton" text="Filter" size="large" variant="primary" isFullWidth/>
                         </Link> */}
@@ -83,12 +83,12 @@ const Todos = () => {
 };
 
 // Made a separate object for the TodoList component for easier readability
-const TodoList = ({ todos }) => {
+const TodoList = ({ todos, activeTab }) => {
     return (
         <ul>
             {todos.map(todo => (
                 <li key={todo.todoID}>
-                    <Todo todo={todo}></Todo>
+                    <Todo todo={todo} activeTab={activeTab}></Todo>
                 </li>
             ))}
         </ul>
