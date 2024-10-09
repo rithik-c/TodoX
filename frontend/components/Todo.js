@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 import Modal from 'react-modal';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faPenToSquare, faSquare, faSquareCheck } from '@fortawesome/free-solid-svg-icons'
 import { Colours } from '../definitions';
 import apiFetch from '../functions/apiFetch';
 import { useDispatch } from "react-redux";
@@ -69,7 +69,7 @@ const Todo = ({todo}) => {
                     {/* Chose to use shorthand method style for onClick rather than create two unnecessary functions for openModal and closeModal */}
                     {/* Also using a functional approach over direct to avoid stale states and prevent asynchronous syncing issues */}
                     <FontAwesomeIcon className="edit-icon" icon={faPenToSquare} onClick={() => toggleModal(currentState => !currentState)} />
-                    <FontAwesomeIcon className="delete-icon" icon={faTrash} onClick={() => updateTodo({ completed: !todo.completed })} />
+                    <FontAwesomeIcon className="delete-icon" icon={todo.completed ? faSquareCheck : faSquare} onClick={() => updateTodo({ completed: !todo.completed })} />
                 </Icons>
             </RightContainer>
 
