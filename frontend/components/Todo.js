@@ -67,7 +67,7 @@ const Todo = ({todo}) => {
                     {/* Chose to use shorthand method style for onClick rather than create two unnecessary functions for openModal and closeModal */}
                     {/* Also using a functional approach over direct to avoid stale states and prevent asynchronous syncing issues */}
                     <FontAwesomeIcon className="edit-icon" icon={"fa-pen-to-square"} onClick={() => toggleModal(currentState => !currentState)} />
-                    <FontAwesomeIcon className="delete-icon" icon={todo.completed ? "fa-square-check" : "fa-square"} onClick={() => updateTodo({ completed: !todo.completed })} />
+                    <FontAwesomeIcon className="checkbox-icon" icon={todo.completed ? "fa-square-check" : "fa-square"} onClick={() => updateTodo({ completed: !todo.completed })} />
                 </Icons>
             </RightContainer>
 
@@ -115,11 +115,26 @@ const Container = styled.div`
     padding: 0.9rem 1rem;
     border-radius: 15px;
     margin-bottom: 0.75rem;
+    transition: background 0.5s ease;
 
     .todoTitle {
         margin: 0;
         color: ${props => (props.completed ? `${Colours.GRAY_DARK_2}` : `${Colours.WHITE}`)};
-        text-decoration: ${props => (props.completed ? 'line-through' : 'none')};
+        
+        position: relative;
+        display: inline-block;
+
+        &::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0.45em;
+            width: ${props => (props.completed ? '100%' : '0')};
+            height: 2px;
+            background-color: ${Colours.GRAY_DARK_2};
+            transition: width 0.5s ease;
+        }
+
     }
 `;
 
@@ -147,7 +162,7 @@ const Icons = styled.div`
     align-items: center;
     
     .edit-icon,
-    .delete-icon {
+    .checkbox-icon {
         cursor: pointer;
         margin-left: 0.5rem;
         font-size: 1.25rem;
@@ -155,7 +170,7 @@ const Icons = styled.div`
     }
     
     .edit-icon:hover,
-    .delete-icon:hover {
+    .checkbox-icon:hover {
         color: ${Colours.ACCENT_1_LIGHTER};
     }
 `;
