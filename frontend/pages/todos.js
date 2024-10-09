@@ -57,7 +57,7 @@ const Todos = () => {
                 } else {
                     return <TodoList todos={incompleteTodos} activeTab={activeTab} />;
                 }
-            })(),
+            })(), //  IIFE (Immediately Invoked Function Expression) to render the content based on the current state
             onClick: () => setActiveTab("Incomplete"),
         },
         {
