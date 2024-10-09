@@ -3,6 +3,11 @@ import { Provider } from 'react-redux';
 import Head from 'next/head';
 import configureStore from '../store/configureStore';
 import Modal from 'react-modal';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faPenToSquare, faSquare, faSquareCheck } from '@fortawesome/free-solid-svg-icons';
+
+// Setting up icons for use in the app
+library.add(faPenToSquare, faSquare, faSquareCheck);
 
 // This default export is required in a new `pages/_app.js` file.
 export default function App({ Component, pageProps }) {
