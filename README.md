@@ -23,7 +23,6 @@ Todo Manager is a full-stack web application that helps users manage their daily
 - **Node.js**: Runtime environment for executing JavaScript on the server.
 - **Redux**: State management library for predictable state changes.
 - **Next.js**: React framework for server-side rendering and routing.
-- **Styled-components**: For styling components dynamically based on props.
 
 ## 🚀 Getting Started
 
