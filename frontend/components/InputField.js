@@ -1,12 +1,15 @@
 import React, { forwardRef } from 'react';
 import styled from 'styled-components';
 import { Colours, Typography } from '../definitions';
-
+import { useSelector } from 'react-redux';
 
 // Custom styled input fields, use the "type" prop to control which HTML input type is rendered
 const InputField = forwardRef(({className, type, value, label, placeholder, size="medium", variant="neutral", disabled=false, icon, ...otherProps}, ref) => {
+
+    const isDark = useSelector((state) => state.colourScheme.isDarkMode);
+
     return (
-        <Container className={className} type={type} size={size} variant={variant} disabled={disabled}>
+        <Container className={className} type={type} size={size} variant={variant} disabled={disabled} isDark={isDark}>
             <label className="formLabel">
                 {
                     label &&
@@ -39,6 +42,7 @@ const Container = styled.div`
         font-weight: ${Typography.WEIGHTS.MEDIUM};
         padding: 0;
         width: 100%;
+        transition: all 0.3s;
         ${(props) => {
             if (props.type !== "textarea") {
                 if (props.size === "large") {
@@ -68,7 +72,7 @@ const Container = styled.div`
                 `;
             }
             else {
-                return `color: ${Colours.BLACK};`;
+                return `color: ${props.isDark ? Colours.BLACK : Colours.GRAY_DARK};`;
             }
         }}
     }
@@ -78,14 +82,14 @@ const Container = styled.div`
     ${(props) => {
         return `
             .formField::placeholder {
-                color: ${Colours.BLACK_LIGHTEST_2};
+                color: ${props.isDark ? Colours.BLACK_LIGHTEST_2 : Colours.GRAY_DARKER};
                 opacity: 1;
             }
             .formField:-ms-input-placeholder {
-                color: ${Colours.BLACK_LIGHTEST_2};
+                color: ${props.isDark ? Colours.BLACK_LIGHTEST_2 : Colours.GRAY_DARKER};
             }
             .formField::-ms-input-placeholder {
-                color: ${Colours.BLACK_LIGHTEST_2};
+                color: ${props.isDark ? Colours.BLACK_LIGHTEST_2 : Colours.GRAY_DARKER};          
             }
         `;
     }}
@@ -149,15 +153,17 @@ const Container = styled.div`
             // If disabled
             if (props.disabled) {
                 return `
-                    background-color: ${Colours.GRAY_LIGHTER};
-                    border: 1px solid ${Colours.GRAY_LIGHT};
-                    color: ${Colours.BLACK_LIGHTEST_2};
+                    background-color: ${props.isDark ? Colours.GRAY_LIGHTER : Colours.GRAY_DARKEST};
+                    border: 1px solid ${props.isDark ? Colours.GRAY_LIGHT : Colours.GRAY_DARKEST};
+                    color: ${props.isDark ? Colours.BLACK_LIGHTEST_2 : Colours.BLACK_LIGHTEST_2};
+                    transition: all 0.3s;
                 `;
             }
             else {
                 return `
-                    background-color: ${Colours.BLACK_LIGHTEST_0};
+                    background-color: ${props.isDark ? Colours.BLACK_LIGHTEST_0 : Colours.BLACK_LIGHTER_2};
                     border: none;
+                    transition: all 0.3s;
                 `;
             }
         

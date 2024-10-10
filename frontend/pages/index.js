@@ -1,17 +1,20 @@
 import React from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
-import { Colours, Typography } from '../definitions';
 import Button from '../components/Button';
 import PageLayout from '../components/PageLayout';
+import { useSelector } from 'react-redux';
 
 
 const Index = () => {
+
+    const isDark = useSelector((state) => state.colourScheme.isDarkMode);
+
     return (
         <PageLayout title="Dashboard">
             <Container>
                 <div className="content">
-                    <img className="logo" src="/img/todox-logo-black.svg" />
+                    <img className="logo" src={isDark ? "/img/todox-logo-black.svg" : "/img/todox-logo-white.svg"}  />
                     <div className="buttons">
                         <Link className="noLinkStyling" href="/create">
                             <Button text="Create new todo" size="large" variant="primary" isFullWidth />

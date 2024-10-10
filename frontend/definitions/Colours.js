@@ -2,15 +2,19 @@ export default {
     // Neutrals
     BLACK: 'rgba(11, 13, 15, 1)',
     BLACK_LIGHT: 'rgba(12, 9, 13, 0.8)',
+    BLACK_LIGHT_2 : 'rgba(15, 15, 15, 1)',
     BLACK_LIGHTER: 'rgba(12, 9, 13, 0.6)',
+    BLACK_LIGHTER_2 : 'rgba(30, 30, 30, 1)',
     BLACK_LIGHTEST_2: 'rgba(12, 9, 13, 0.35)',
     BLACK_LIGHTEST_1: 'rgba(12, 9, 13, 0.1)',
     BLACK_LIGHTEST_0: 'rgba(12, 9, 13, 0.05)',
     BLACK_LIGHTEST_00: 'rgba(12, 9, 13, 0.03)',
 
-    GRAY_DARKER: 'rgba(57, 56, 57, 1)',
-    GRAY_DARK: 'rgba(113, 112, 113, 1)',
-    GRAY_DARK_2: 'rgba(215, 215, 215, 1)',
+
+    GRAY_DARKEST: 'rgba(57, 56, 57, 1)',
+    GRAY_DARKER: 'rgba(113, 112, 113, 1)',
+    GRAY_DARK_2: 'rgba(180, 180, 180, 1)',
+    GRAY_DARK: 'rgba(215, 215, 215, 1)',
     GRAY: 'rgba(226, 223, 226, 1)',
     GRAY_LIGHT: 'rgba(236, 234, 236, 1)',
     GRAY_LIGHTER: 'rgba(248, 247, 248, 1)',
@@ -33,6 +37,8 @@ export default {
     ACCENT_1_LIGHT: 'rgba(119, 169, 190, 1)',
     ACCENT_1_LIGHT_2: 'rgba(0, 147, 210, 1)',
     ACCENT_1_LIGHTER: 'rgba(190, 236, 255, 1)',
+
+    ACCENT_2: 'rgba(178, 71, 216, 1)',
 
     // Statuses
     SUCCESS_DARKER: 'rgba(83, 120, 7, 1)',

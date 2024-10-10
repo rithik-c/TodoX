@@ -19,6 +19,7 @@ const SignUp = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [isMounted, setIsMounted] = useState(false);
     const signUpState = useSelector((state) => state.signUp);
+    const isDark = useSelector((state) => state.colourScheme.isDarkMode);
     const dispatch = useDispatch();
     const router = useRouter();
 
@@ -66,7 +67,7 @@ const SignUp = () => {
 
     return (
         <PageLayout title="Sign up">
-            <Container>
+            <Container isDark={isDark}>
                 <div className="content">
                     <h1>Sign up</h1>
                     <Alert message={signUpState.alerts.error} onClose={() => dispatch(clearSignUpAlerts())} />
@@ -80,8 +81,8 @@ const SignUp = () => {
                         <Button className="loginButton" type="submit" text="Sign up" size="large" variant="primary" disabled={isSigningUp} isFullWidth />
                     </Form>
                 </div>
-                <Footer>
-                    <p>Already have an account? <Link className="highlightedLink" href="/signin">Sign in</Link></p>
+                <Footer isDark={isDark}>
+                    <p>Already have an account?  <Link className="highlightedLink" href="/signin">Sign in</Link></p>
                 </Footer>
             </Container>
         </PageLayout>
@@ -94,12 +95,13 @@ const Container = styled.div`
     width: 100%;
 
     h1 {
-        color: ${Colours.BLACK};
+        color: ${({ isDark }) => (isDark ? Colours.BLACK : Colours.WHITE)};
         font-size: ${Typography.HEADING_SIZES.M};
         font-weight: ${Typography.WEIGHTS.LIGHT};
         line-height: 2.625rem;
         margin-bottom: 2rem;
         margin-top: 1rem;
+        transition: all 0.3s;
     }
 
     .input {
@@ -121,7 +123,7 @@ const Container = styled.div`
     .passwordToggle {
         position: relative;
         cursor: pointer;
-        color: ${Colours.GRAY_DARK};
+        color: ${Colours.GRAY_DARKER};
     }
 `;
 
@@ -132,6 +134,8 @@ const Footer = styled.div`
     p {
         font-size: ${Typography.BODY_SIZES.L};
         font-weight: ${Typography.WEIGHTS.MEDIUM};
+        color: ${({ isDark }) => (isDark ? Colours.BLACK : Colours.GRAY_DARK)};
+        transition: all 0.3s;
 
         .highlightedLink {
             color: ${Colours.ACCENT_1};

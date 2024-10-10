@@ -19,6 +19,7 @@ const SignIn = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [isMounted, setIsMounted] = useState(false);
     const signInState = useSelector((state) => state.signIn);
+    const isDark = useSelector((state) => state.colourScheme.isDarkMode);
     const dispatch = useDispatch();
     const router = useRouter();
 
@@ -53,7 +54,7 @@ const SignIn = () => {
 
     return (
         <PageLayout title="Sign in">
-            <Container>
+            <Container isDark={isDark}>
                 <div className="content">
                     <h1>Sign In</h1>
                     <Alert message={signInState.alerts.error} onClose={() => dispatch(clearSignInAlerts())} />
@@ -65,8 +66,8 @@ const SignIn = () => {
                         <Button className="loginButton" type="submit" text="Sign in" size="large" variant="primary" disabled={isSigningIn} isFullWidth />
                     </Form>
                 </div>
-                <Footer>
-                    <p>Don't have an account? <Link className="highlightedLink" href="/signup">Sign up</Link></p>
+                <Footer isDark={isDark}>
+                    <p>Don't have an account?  <Link className="highlightedLink" href="/signup">Sign up</Link></p>
                 </Footer>
             </Container>
         </PageLayout>
@@ -79,12 +80,13 @@ const Container = styled.div`
     width: 100%;
 
     h1 {
-        color: ${Colours.BLACK};
+        color: ${({ isDark }) => (isDark ? Colours.BLACK : Colours.WHITE)};
         font-size: ${Typography.HEADING_SIZES.M};
         font-weight: ${Typography.WEIGHTS.LIGHT};
         line-height: 2.625rem;
         margin-bottom: 2rem;
         margin-top: 1rem;
+        transition: all 0.3s;
     }
 
     .input {
@@ -92,7 +94,8 @@ const Container = styled.div`
     }
 
     .loginButton {
-        margin-bottom: 2.0625rem;
+        margin-top: 1.5rem;
+        margin-bottom: 0.25rem;
     }
 
     .signUpOptions {
@@ -106,17 +109,19 @@ const Container = styled.div`
     .passwordToggle {
         position: relative;
         cursor: pointer;
-        color: ${Colours.GRAY_DARK};
+        color: ${Colours.GRAY_DARKER};
     }
 `;
 
 const Footer = styled.div`
-    padding: 1.5rem 0rem;
+    padding: 1rem 0rem;
     text-align: center;
 
     p {
         font-size: ${Typography.BODY_SIZES.L};
         font-weight: ${Typography.WEIGHTS.MEDIUM};
+        color: ${({ isDark }) => (isDark ? Colours.BLACK : Colours.GRAY_DARK)};
+        transition: all 0.3s;
 
         .highlightedLink {
             color: ${Colours.ACCENT_1};

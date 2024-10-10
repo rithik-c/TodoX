@@ -4,10 +4,10 @@ import Head from 'next/head';
 import configureStore from '../store/configureStore';
 import Modal from 'react-modal';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faPenToSquare, faSquare, faSquareCheck, faCircleXmark, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { faPenToSquare, faSquare, faSquareCheck, faCircleXmark, faEye, faEyeSlash, faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
 
 // Setting up icons for use in the app
-library.add(faPenToSquare, faSquare, faSquareCheck, faCircleXmark, faEye, faEyeSlash);
+library.add(faPenToSquare, faSquare, faSquareCheck, faCircleXmark, faEye, faEyeSlash, faMoon, faSun);
 
 // This default export is required in a new `pages/_app.js` file.
 export default function App({ Component, pageProps }) {

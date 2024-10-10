@@ -1,12 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Colours, Typography } from '../definitions';
-
+import { useSelector } from 'react-redux';
 
 // Custom button component, pass in a string for what text should be rendered and set a variant to control the colour scheme
 const Button = ({text, type="button", isFullWidth=false, size="large", variant="primary", disabledVariant="neutral", disabled=false, ...otherProps}) => {
+
+    const isDark = useSelector((state) => state.colourScheme.isDarkMode);
+
     return (
-        <ButtonElement type={type} isFullWidth={isFullWidth} size={size} variant={variant} disabledVariant={disabledVariant} disabled={disabled} {...otherProps}>
+        <ButtonElement type={type} isFullWidth={isFullWidth} size={size} variant={variant} disabledVariant={disabledVariant} disabled={disabled} isDark={isDark} {...otherProps}>
             <span className="centerContent">
                 {text}
             </span>
@@ -55,9 +58,10 @@ const ButtonElement = styled.button`
     ${(props) => {
             if (props.disabled) {
                 return `
-                    background-color: ${Colours.TRANSPARENT};
-                    border: 1px solid ${Colours.GRAY_LIGHT};
-                    color: ${Colours.BLACK_LIGHTEST_2};
+                    background-color: ${props.isDark ? Colours.TRANSPARENT : Colours.GRAY_DARKER};
+                    border: 1px solid ${props.isDark ? Colours.GRAY_LIGHT : Colours.TRANSPARENT};
+                    color: ${props.isDark ? Colours.BLACK_LIGHTEST_2 : Colours.GRAY_DARKEST};
+                    transition: all 0.3s;
                 `;
             }
             else if (props.variant === "primary") {
@@ -81,6 +85,11 @@ const ButtonElement = styled.button`
             else if (props.variant === "neutral-light") {
                 return `
                     background-color: ${Colours.BLACK_LIGHTEST_0};
+                    color: ${Colours.BLACK};
+                `;
+            } else if (props.variant === "light") {
+                return `
+                    background-color: ${Colours.GRAY_DARK};
                     color: ${Colours.BLACK};
                 `;
             }
@@ -114,6 +123,10 @@ const ButtonElement = styled.button`
                 else if (props.variant === "neutral-light") {
                     return `
                         background-color: ${Colours.BLACK_LIGHTEST_1};
+                    `;
+                } if (props.variant === "light") {
+                    return `
+                        background-color: ${Colours.GRAY_DARK_2};
                     `;
                 }
             }

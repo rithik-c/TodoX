@@ -15,6 +15,7 @@ import Link from 'next/link';
 const Create = () => {
     const [isSaving, setIsSaving] = useState(false);
     const todoState = useSelector((state) => state.todo);
+    const isDark = useSelector((state) => state.colourScheme.isDarkMode);
     const inputRef = useRef(null);
     const dispatch = useDispatch();
 
@@ -53,7 +54,7 @@ const Create = () => {
 
     return (
         <PageLayout title="Create todo">
-            <Container>
+            <Container isDark={isDark}>
                 <div className="content">
                     <h1>Create todo</h1>
                     <Alert message={todoState.alerts.error} onClose={() => dispatch(clearTodoAlerts())} />
@@ -63,7 +64,7 @@ const Create = () => {
                         {/* Chose to use a styled div for ButtonContainer to match current coding style and modify the button css and placement */}
                         <ButtonContainer>
                             <Link className="maxWidthCenter" href="/">
-                                <Button text="Back" size="large" variant="secondary" isFullWidth/>
+                                <Button text="Back" size="large" variant={isDark? "secondary" : "light"} isFullWidth/>
                             </Link>
                             {/* Created a back button for easier navigation. */}
                             <Button className="maxWidthCenter" type="submit" text="Save" size="large" variant="primary" disabled={isSaving || !todoState.body.name} isFullWidth />
@@ -82,12 +83,13 @@ const Container = styled.div`
 
     .content {
         h1 {
-            color: ${Colours.BLACK};
+            color: ${({ isDark }) => (isDark ? Colours.BLACK : Colours.WHITE)};
             font-size: ${Typography.HEADING_SIZES.M};
             font-weight: ${Typography.WEIGHTS.LIGHT};
             line-height: 2.625rem;
             margin-bottom: 2rem;
             margin-top: 1rem;
+            transition: all 0.3s;
         }
     }
 `;

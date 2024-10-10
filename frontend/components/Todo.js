@@ -196,7 +196,7 @@ const Container = styled.div`
 
     .todoTitle {
         margin: 0;
-        color: ${props => (props.completed ? `${Colours.GRAY_DARK_2}` : `${Colours.WHITE}`)};
+        color: ${props => (props.completed ? `${Colours.GRAY_DARK}` : `${Colours.WHITE}`)};
         
         position: relative;
         display: inline-block;
@@ -208,7 +208,7 @@ const Container = styled.div`
             bottom: 0.45em;
             width: ${props => (props.completed ? '100%' : '0')};
             height: 2px;
-            background-color: ${Colours.GRAY_DARK_2};
+            background-color: ${Colours.GRAY_DARK};
             transition: width 0.5s ease;
         }
 

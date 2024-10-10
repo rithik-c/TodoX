@@ -3,6 +3,7 @@ import signIn from '../reducers/signIn';
 import signUp from '../reducers/signUp';
 import todo from '../reducers/todo';
 import todoList from '../reducers/todoList';
+import colourScheme from '../reducers/colourScheme';
 
 
 let store;
@@ -17,7 +18,8 @@ export default () => {
             signIn,
             signUp,
             todo,
-            todoList
+            todoList,
+            colourScheme
         })
     );
 

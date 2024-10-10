@@ -15,6 +15,7 @@ const Todos = () => {
 
     // API call to fetch todos of current user
     const todoListState = useSelector((state) => state.todoList); // State to hold the fetched todos
+    const isDark = useSelector((state) => state.colourScheme.isDarkMode);
     const dispatch = useDispatch();
     const [activeTab, setActiveTab] = useState("Incomplete"); // Chose to not store in redux since it's only used in this component
     const [loading, setLoading] = useState(true); // TODO: Unused but implemented for futureproofing for scaling purposes (State to manage loading)
@@ -71,13 +72,13 @@ const Todos = () => {
 
     return (
         <PageLayout title="View Todos">
-            <Container>
+            <Container isDark={isDark}>
                 <div className="content">
                     <h1>My Todos</h1>
                     <Tabs tabs={tabs} activeTab={activeTab} />
                     <ButtonContainer>
                         <Link className="noLinkStyling" href="/">
-                            <Button className="backButton" text="Back" size="large" variant="secondary" isFullWidth/>
+                            <Button className="backButton" text="Back" size="large" variant={isDark? "secondary" : "light"} isFullWidth/>
                         </Link>
                         {/* TODO: Can add filter functionality in the future */}
                         {/* <Link className="noLinkStyling" href="/">
@@ -112,12 +113,13 @@ const Container = styled.div`
 
     .content {
         h1 {
-            color: ${Colours.BLACK};
+            color: ${({ isDark }) => (isDark ? Colours.BLACK : Colours.WHITE)};
             font-size: ${Typography.HEADING_SIZES.M};
             font-weight: ${Typography.WEIGHTS.LIGHT};
             line-height: 2.625rem;
             margin-bottom: 2rem;
             margin-top: 1rem;
+            transition: all 0.3s;
         }
     }
 `;

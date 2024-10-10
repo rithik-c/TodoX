@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Colours from "../definitions/Colours";
 import Typography from "../definitions/Typography";
+import { useSelector } from "react-redux";
 
 // tabs prop format
 // [
@@ -19,6 +20,8 @@ export default function Tabs({
     activeTab,
     tabs = [],
 }) {
+
+    const isDark = useSelector((state) => state.colourScheme.isDarkMode);
     const tabCode = [];
     const contentCode = [];
 
@@ -28,6 +31,7 @@ export default function Tabs({
                 key={tab.title}
                 isActive={activeTab === tab.title}
                 onClick={tab.onClick}
+                isDark={isDark}
             >
                 <span className="tabTitle">{tab.title}</span>
             </Tab>
@@ -43,7 +47,7 @@ export default function Tabs({
 
     return (
         <Container className={className} ref={ref}>
-            <TabList className={tabsClassName}>{tabCode}</TabList>
+            <TabList className={tabsClassName} isDark={isDark}>{tabCode}</TabList>
                 <div className="content">{contentCode}</div>
         </Container>
     );
@@ -66,7 +70,7 @@ const Container = styled.div`
 `;
 
 const TabList = styled.ul`
-    border-bottom: 1px solid ${Colours.GRAY_LIGHT};
+    border-bottom: 1px solid ${({ isDark }) => (isDark ? Colours.GRAY_LIGHT : Colours.GRAY_DARKER)};
     box-sizing: border-box;
     display: flex;
     flex-shrink: 0;
@@ -74,6 +78,7 @@ const TabList = styled.ul`
     list-style: none;
     overflow-x: auto;
     width: 100%;
+    transition: all 0.3s;
 `;
 
 const Tab = styled.li`
@@ -86,16 +91,17 @@ const Tab = styled.li`
     -moz-user-select: none;
     -webkit-user-select: none;
     white-space: nowrap;
+    transition: all 0.3s;
 
     ${(props) => {
         if (props.isActive) {
             return `
-                border-bottom: 2px solid ${Colours.BLACK};
-                color: ${Colours.BLACK};
+                border-bottom: 2px solid ${props.isDark ? Colours.BLACK : Colours.WHITE};
+                color: ${props.isDark ? Colours.BLACK : Colours.WHITE};
             `;
         }
         return `
-            color: ${Colours.BLACK_LIGHTEST_2};
+            color: ${props.isDark ? Colours.BLACK_LIGHTEST_2 : Colours.WHITE_LIGHTEST_2};
         `;
     }}
 
