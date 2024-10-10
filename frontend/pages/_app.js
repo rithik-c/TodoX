@@ -5,6 +5,7 @@ import configureStore from '../store/configureStore';
 import Modal from 'react-modal';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { updateSignInSuccess } from '../actions/signIn';
+import { setColourScheme } from '../actions/colourScheme';
 import { faPenToSquare, faSquare, faSquareCheck, faCircleXmark, faEye, faEyeSlash, faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
 
 // Setting up icons for use in the app
@@ -17,11 +18,12 @@ function ReduxInitializer() {
 
     // Hydrate the Redux state if user is already signed in for session persistence across page reloads
     useEffect(() => {
-        const isSignedIn = localStorage.getItem('isSignedIn');
+        const isSignedIn = localStorage.getItem('isSignedIn') === 'true';
+        const isDarkMode = localStorage.getItem('isDarkMode') === 'true';
         
-        if (isSignedIn) {
-            dispatch(updateSignInSuccess({ success: 'User is signed in' }));
-        }
+        if (isSignedIn) dispatch(updateSignInSuccess({ success: 'User is signed in' }));
+        if (isDarkMode) dispatch(setColourScheme({ isDark: isDarkMode }));
+
     }, [dispatch]);
 
     return null;

@@ -72,7 +72,7 @@ const Container = styled.div`
                 `;
             }
             else {
-                return `color: ${props.isDark ? Colours.BLACK : Colours.GRAY_DARK};`;
+                return `color: ${props.isDark ? Colours.GRAY_DARK : Colours.BLACK};`;
             }
         }}
     }
@@ -82,14 +82,14 @@ const Container = styled.div`
     ${(props) => {
         return `
             .formField::placeholder {
-                color: ${props.isDark ? Colours.BLACK_LIGHTEST_2 : Colours.GRAY_DARKER};
+                color: ${props.isDark ? Colours.GRAY_DARKER : Colours.BLACK_LIGHTEST_2};
                 opacity: 1;
             }
             .formField:-ms-input-placeholder {
-                color: ${props.isDark ? Colours.BLACK_LIGHTEST_2 : Colours.GRAY_DARKER};
+                color: ${props.isDark ? Colours.GRAY_DARKER : Colours.BLACK_LIGHTEST_2};
             }
             .formField::-ms-input-placeholder {
-                color: ${props.isDark ? Colours.BLACK_LIGHTEST_2 : Colours.GRAY_DARKER};          
+                color: ${props.isDark ? Colours.GRAY_DARKER : Colours.BLACK_LIGHTEST_2};          
             }
         `;
     }}
@@ -153,15 +153,15 @@ const Container = styled.div`
             // If disabled
             if (props.disabled) {
                 return `
-                    background-color: ${props.isDark ? Colours.GRAY_LIGHTER : Colours.GRAY_DARKEST};
-                    border: 1px solid ${props.isDark ? Colours.GRAY_LIGHT : Colours.GRAY_DARKEST};
+                    background-color: ${props.isDark ? Colours.GRAY_DARKEST : Colours.GRAY_LIGHTER};
+                    border: 1px solid ${props.isDark ? Colours.GRAY_DARKEST : Colours.GRAY_LIGHT};
                     color: ${props.isDark ? Colours.BLACK_LIGHTEST_2 : Colours.BLACK_LIGHTEST_2};
                     transition: all 0.3s;
                 `;
             }
             else {
                 return `
-                    background-color: ${props.isDark ? Colours.BLACK_LIGHTEST_0 : Colours.BLACK_LIGHTER_2};
+                    background-color: ${props.isDark ? Colours.BLACK_LIGHTER_2 : Colours.BLACK_LIGHTEST_0};
                     border: none;
                     transition: all 0.3s;
                 `;

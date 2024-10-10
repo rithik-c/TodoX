@@ -80,7 +80,7 @@ const Container = styled.div`
     width: 100%;
 
     h1 {
-        color: ${({ isDark }) => (isDark ? Colours.BLACK : Colours.WHITE)};
+        color: ${({ isDark }) => (isDark ? Colours.WHITE : Colours.BLACK)};
         font-size: ${Typography.HEADING_SIZES.M};
         font-weight: ${Typography.WEIGHTS.LIGHT};
         line-height: 2.625rem;
@@ -120,7 +120,7 @@ const Footer = styled.div`
     p {
         font-size: ${Typography.BODY_SIZES.L};
         font-weight: ${Typography.WEIGHTS.MEDIUM};
-        color: ${({ isDark }) => (isDark ? Colours.BLACK : Colours.GRAY_DARK)};
+        color: ${({ isDark }) => (isDark ? Colours.GRAY_DARK : Colours.BLACK)};
         transition: all 0.3s;
 
         .highlightedLink {

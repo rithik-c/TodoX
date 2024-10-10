@@ -58,9 +58,9 @@ const ButtonElement = styled.button`
     ${(props) => {
             if (props.disabled) {
                 return `
-                    background-color: ${props.isDark ? Colours.TRANSPARENT : Colours.GRAY_DARKER};
-                    border: 1px solid ${props.isDark ? Colours.GRAY_LIGHT : Colours.TRANSPARENT};
-                    color: ${props.isDark ? Colours.BLACK_LIGHTEST_2 : Colours.GRAY_DARKEST};
+                    background-color: ${props.isDark ? Colours.GRAY_DARKER : Colours.TRANSPARENT};
+                    border: 1px solid ${props.isDark ? Colours.TRANSPARENT : Colours.GRAY_LIGHT};
+                    color: ${props.isDark ? Colours.GRAY_DARKEST : Colours.BLACK_LIGHTEST_2};
                     transition: all 0.3s;
                 `;
             }

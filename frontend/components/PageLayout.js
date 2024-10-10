@@ -29,7 +29,7 @@ export default PageLayout;
 
 const Container = styled.div`
     align-items: center;
-    background-color: ${({ isDark }) => (isDark ? Colours.GRAY_LIGHT : Colours.BLACK_LIGHTER_2)};
+    background-color: ${({ isDark }) => (isDark ? Colours.BLACK_LIGHTER_2 : Colours.GRAY_LIGHT)};
     display: flex;
     justify-content: center;
     min-height: 100vh;
@@ -37,7 +37,7 @@ const Container = styled.div`
     transition: all 0.3s;
 
     .contentContainer {
-        background-color: ${({ isDark }) => (isDark ? Colours.WHITE : Colours.BLACK_LIGHT_2)};
+        background-color: ${({ isDark }) => (isDark ? Colours.BLACK_LIGHT_2 : Colours.WHITE)};
         border-radius: 1.5rem;
         flex-grow: 1;
         margin: 5rem 1.25rem 3rem 1.25rem;

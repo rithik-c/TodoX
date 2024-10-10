@@ -15,6 +15,7 @@ const Navbar = ({className}) => {
     const dispatch = useDispatch();
     const router = useRouter();
     const isLoggedIn = useSelector((state) => (state.signIn.isSignedIn === true || state.signUp.isSignedIn === true));
+    const isDark = useSelector((state) => state.colourScheme.isDarkMode);
     const [isClient, setIsClient] = useState(false); // State to track whether we're rendering on the client-side
 
     useEffect(() => {
@@ -37,11 +38,11 @@ const Navbar = ({className}) => {
                 <Link href="/">
                     <img className="headerLogo" src="/img/todox-logo-white.svg" />
                 </Link>
-                <ActionContainer>
+                <ActionContainer isDark={isDark}>
                     {isClient && (
                         <>
                             <FontAwesomeIcon className="sun-icon" icon={"fa-sun"} />
-                            <Toggle onToggle={() => dispatch(toggleColourScheme())} />
+                            <Toggle onToggle={() => dispatch(toggleColourScheme())} defaultState={isDark} />
                             <FontAwesomeIcon className="moon-icon" icon={"fa-moon"} />
                         </>
                     )}

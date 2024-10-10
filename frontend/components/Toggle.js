@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Colours } from '../definitions';
 
-const Toggle = ({onToggle}) => {
-    const [isOn, setIsOn] = useState(false);
+const Toggle = ({onToggle, defaultState}) => {
+    const [isOn, setIsOn] = useState(defaultState || false);
 
     const handleToggle = () => {
         setIsOn((prevState) => !prevState);

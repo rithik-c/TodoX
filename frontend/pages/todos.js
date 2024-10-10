@@ -52,9 +52,9 @@ const Todos = () => {
                 const incompleteTodos = todoListState.todos.filter(todo => !todo.completed);
     
                 if (todoListState.todos.length === 0) {
-                    return <h2 style={{ color: isDark ? Colours.BLACK : Colours.GRAY_DARK, transition: "0.3s" }}>You haven't made any Todos yet!</h2>;
+                    return <h2 style={{ color: isDark ? Colours.GRAY_DARK : Colours.BLACK, transition: "0.3s" }}>You haven't made any Todos yet!</h2>;
                 } else if (incompleteTodos.length === 0) {
-                    return <h2 style={{ color: isDark ? Colours.BLACK : Colours.GRAY_DARK, transition: "0.3s" }}>You're all caught up!</h2>;
+                    return <h2 style={{ color: isDark ? Colours.GRAY_DARK : Colours.BLACK, transition: "0.3s" }}>You're all caught up!</h2>;
                 } else {
                     return <TodoList todos={incompleteTodos} activeTab={activeTab} />;
                 }
@@ -64,7 +64,7 @@ const Todos = () => {
         {
             title: "All",
             content: todoListState.todos.length === 0
-            ? <h2 style={{ color: isDark ? Colours.BLACK : Colours.GRAY_DARK, transition: "0.3s" }}>You haven't made any Todos yet!</h2>
+            ? <h2 style={{ color: isDark ? Colours.GRAY_DARK : Colours.BLACK, transition: "0.3s" }}>You haven't made any Todos yet!</h2>
             : <TodoList todos={todoListState.todos} activeTab={activeTab} />,
             onClick: () => setActiveTab("All"),
         },
@@ -78,7 +78,7 @@ const Todos = () => {
                     <Tabs tabs={tabs} activeTab={activeTab} />
                     <ButtonContainer>
                         <Link className="noLinkStyling" href="/">
-                            <Button className="backButton" text="Back" size="large" variant={isDark? "secondary" : "light"} isFullWidth/>
+                            <Button className="backButton" text="Back" size="large" variant={isDark? "light" : "secondary"} isFullWidth/>
                         </Link>
                         {/* TODO: Can add filter functionality in the future */}
                         {/* <Link className="noLinkStyling" href="/">
@@ -113,7 +113,7 @@ const Container = styled.div`
 
     .content {
         h1 {
-            color: ${({ isDark }) => (isDark ? Colours.BLACK : Colours.WHITE)};
+            color: ${({ isDark }) => (isDark ? Colours.WHITE : Colours.BLACK)};
             font-size: ${Typography.HEADING_SIZES.M};
             font-weight: ${Typography.WEIGHTS.LIGHT};
             line-height: 2.625rem;
