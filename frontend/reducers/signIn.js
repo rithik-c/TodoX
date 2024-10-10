@@ -38,6 +38,7 @@ export default (state = defaultState, action) => {
                 }
             };
         case 'SIGN-IN/SUCCESS':
+            localStorage.setItem('isSignedIn', true);  // Store signed-in status in local storage for session persistence across page reloads
             return {
                 ...state,
                 alerts: {
@@ -54,6 +55,7 @@ export default (state = defaultState, action) => {
                 }
             };
         case 'SIGN-IN/CLEAR':
+            localStorage.removeItem('isSignedIn');  // Remove signed-in status on clear
             return {
                 ...defaultState
             };
