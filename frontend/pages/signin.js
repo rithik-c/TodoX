@@ -26,6 +26,7 @@ const SignIn = () => {
     // This avoids server-side rendering mismatch issues, especially with Next.js, where the initial render occurs on the server
     useEffect(() => {
         setIsMounted(true);
+        dispatch(clearSignIn());
     }, []);
 
     const handleSubmit = async (event) => {
