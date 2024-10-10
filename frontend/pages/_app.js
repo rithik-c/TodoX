@@ -18,7 +18,6 @@ function ReduxInitializer() {
     // Hydrate the Redux state if user is already signed in for session persistence across page reloads
     useEffect(() => {
         const isSignedIn = localStorage.getItem('isSignedIn');
-        console.log('isSignedIn:', isSignedIn);
         
         if (isSignedIn) {
             dispatch(updateSignInSuccess({ success: 'User is signed in' }));

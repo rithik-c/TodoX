@@ -52,9 +52,9 @@ const Todos = () => {
                 const incompleteTodos = todoListState.todos.filter(todo => !todo.completed);
     
                 if (todoListState.todos.length === 0) {
-                    return <h2>You haven't made any Todos yet!</h2>;
+                    return <h2 style={{ color: isDark ? Colours.BLACK : Colours.GRAY_DARK, transition: "0.3s" }}>You haven't made any Todos yet!</h2>;
                 } else if (incompleteTodos.length === 0) {
-                    return <h2>You're all caught up!</h2>;
+                    return <h2 style={{ color: isDark ? Colours.BLACK : Colours.GRAY_DARK, transition: "0.3s" }}>You're all caught up!</h2>;
                 } else {
                     return <TodoList todos={incompleteTodos} activeTab={activeTab} />;
                 }
@@ -64,7 +64,7 @@ const Todos = () => {
         {
             title: "All",
             content: todoListState.todos.length === 0
-            ? <h2>You haven't made any Todos yet!</h2>
+            ? <h2 style={{ color: isDark ? Colours.BLACK : Colours.GRAY_DARK, transition: "0.3s" }}>You haven't made any Todos yet!</h2>
             : <TodoList todos={todoListState.todos} activeTab={activeTab} />,
             onClick: () => setActiveTab("All"),
         },
