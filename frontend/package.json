@@ -9,7 +9,7 @@
     "start": "next start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Brynnon Picard @ VGen.co",
+  "author": "Rithik C",
   "license": "ISC",
   "dependencies": {
     "@babel/cli": "^7.17.10",
