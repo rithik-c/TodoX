@@ -141,7 +141,8 @@ const Todo = ({todo, activeTab}) => {
                     borderRadius: '15px',
                     padding: '2rem',
                     boxShadow: '0 4px 15px rgba(0, 0, 0, 0.1)',
-                    width: '400px'
+                    width: '400px',
+                    'max-width': '78vw',
                 }
             }}>
                 <ModalContent>
