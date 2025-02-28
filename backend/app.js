@@ -21,19 +21,20 @@ import userRouter from './src/routers/user.js';
     
     // Prevent CORS issues
     app.use((req, res, next) => {
-        if (FRONTEND_URL) {
-            // Handle other subdomains like www in addition to root domain
-            if (req.headers.origin && req.headers.origin.includes(FRONTEND_DOMAIN)) {
-                res.append('Access-Control-Allow-Origin', req.headers.origin);
-            }
-            else {
-                res.append('Access-Control-Allow-Origin', FRONTEND_URL);
-            }
+        const allowedOrigins = [process.env.FRONTEND_URL]; // Ensure this is correctly set in .env
+        const origin = req.headers.origin;
+    
+        if (allowedOrigins.includes(origin)) {
+            res.setHeader('Access-Control-Allow-Origin', origin);
+            res.setHeader('Access-Control-Allow-Credentials', 'true');
+            res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+            res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, Accept, Origin, X-Requested-With');
         }
-        res.append('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Headers, Authorization, Accept, Origin, X-Requested-With');
-        res.append('Access-Control-Allow-Credentials', true);
-        res.append('Access-Control-Allow-Methods', 'DELETE, GET, POST, OPTIONS, PUT, PATCH');
-        
+    
+        if (req.method === "OPTIONS") {
+            return res.sendStatus(200);
+        }
+    
         next();
     });
 
