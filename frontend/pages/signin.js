@@ -40,10 +40,17 @@ const SignIn = () => {
                 body: signInState.body, 
                 method: "POST"
             });
+
+            console.log("API Response:", response);
+            
             if (response.status === 200) {
                 dispatch(clearSignIn());
                 dispatch(updateSignInSuccess({ success: "Sign in successful, redirecting..." }));
-                router.push("/");
+                
+                setTimeout(() => { 
+                    router.push("/");
+                }, 1000);
+                
             }
             else {
                 dispatch(updateSignInError({ error: response.body.error }));
