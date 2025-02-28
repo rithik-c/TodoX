@@ -12,7 +12,7 @@ import userRouter from './src/routers/user.js';
 
 
 (async () => {
-    const {FRONTEND_DOMAIN, FRONTEND_URL, TODOX_DB_NAME, API_URL} = process.env;
+    const {FRONTEND_DOMAIN, FRONTEND_URL, TODOX_DB_NAME} = process.env;
     const PORT = process.env.PORT || 4000;
     const app = express();
     app.set('trust proxy', true);
@@ -56,6 +56,6 @@ import userRouter from './src/routers/user.js';
     app.use('/user', userRouter({userRepository}));
 
     app.listen(PORT, () => {
-        console.log(`TodoX API listening at ${API_URL}:${PORT}`);
+        console.log(`TodoX API listening on Port ${PORT}`);
     });
 })();
