@@ -64,7 +64,7 @@ const Create = () => {
                         {/* Chose to use a styled div for ButtonContainer to match current coding style and modify the button css and placement */}
                         <ButtonContainer>
                             <Link className="maxWidthCenter" href="/">
-                                <Button text="Back" size="large" variant={isDark? "secondary" : "light"} isFullWidth/>
+                                <Button text="Back" size="large" variant={isDark? "light" : "secondary"} isFullWidth/>
                             </Link>
                             {/* Created a back button for easier navigation. */}
                             <Button className="maxWidthCenter" type="submit" text="Save" size="large" variant="primary" disabled={isSaving || !todoState.body.name} isFullWidth />
@@ -83,7 +83,7 @@ const Container = styled.div`
 
     .content {
         h1 {
-            color: ${({ isDark }) => (isDark ? Colours.BLACK : Colours.WHITE)};
+            color: ${({ isDark }) => (isDark ? Colours.WHITE : Colours.BLACK)};
             font-size: ${Typography.HEADING_SIZES.M};
             font-weight: ${Typography.WEIGHTS.LIGHT};
             line-height: 2.625rem;

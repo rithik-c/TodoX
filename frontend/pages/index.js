@@ -14,7 +14,7 @@ const Index = () => {
         <PageLayout title="Dashboard">
             <Container>
                 <div className="content">
-                    <img className="logo" src={isDark ? "/img/todox-logo-black.svg" : "/img/todox-logo-white.svg"}  />
+                    <img className="logo" src={isDark ? "/img/todox-logo-white.svg" : "/img/todox-logo-black.svg"}  />
                     <div className="buttons">
                         <Link className="noLinkStyling" href="/create">
                             <Button text="Create new todo" size="large" variant="primary" isFullWidth />

@@ -70,7 +70,7 @@ const Container = styled.div`
 `;
 
 const TabList = styled.ul`
-    border-bottom: 1px solid ${({ isDark }) => (isDark ? Colours.GRAY_LIGHT : Colours.GRAY_DARKER)};
+    border-bottom: 1px solid ${({ isDark }) => (isDark ? Colours.GRAY_DARKER : Colours.GRAY_LIGHT)};
     box-sizing: border-box;
     display: flex;
     flex-shrink: 0;
@@ -96,12 +96,12 @@ const Tab = styled.li`
     ${(props) => {
         if (props.isActive) {
             return `
-                border-bottom: 2px solid ${props.isDark ? Colours.BLACK : Colours.WHITE};
-                color: ${props.isDark ? Colours.BLACK : Colours.WHITE};
+                border-bottom: 2px solid ${props.isDark ? Colours.WHITE : Colours.BLACK};
+                color: ${props.isDark ? Colours.WHITE : Colours.BLACK};
             `;
         }
         return `
-            color: ${props.isDark ? Colours.BLACK_LIGHTEST_2 : Colours.WHITE_LIGHTEST_2};
+            color: ${props.isDark ? Colours.WHITE_LIGHTEST_2 : Colours.BLACK_LIGHTEST_2};
         `;
     }}
 
