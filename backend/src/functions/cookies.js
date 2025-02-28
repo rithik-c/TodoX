@@ -1,20 +1,21 @@
 import jwt from 'jsonwebtoken';
 
 
-export const setSessionCookie = (res, {userID, sessionStarted}) => {
+export const setSessionCookie = (res, { userID, sessionStarted }) => {
     const { COOKIE_LIFETIME, COOKIE_DOMAIN } = process.env;
 
     let options = {
-        // COOKIE_LIFETIME is in days, convert it to ms
-        maxAge: COOKIE_LIFETIME * 24 * 60 * 60 * 1000, 
-        secure: true
+        maxAge: COOKIE_LIFETIME * 24 * 60 * 60 * 1000, // Convert COOKIE_LIFETIME from days to milliseconds
+        httpOnly: true, // Prevent access from frontend JavaScript (security best practice)
+        secure: true,
+        sameSite: 'None'
     };
 
     if (COOKIE_DOMAIN) {
         options.domain = COOKIE_DOMAIN;
     }
 
-    res.cookie('todox-session', generateSessionToken({userID, sessionStarted}), options);
+    res.cookie('todox-session', generateSessionToken({ userID, sessionStarted }), options);
 };
 
 export const deleteCookies = (res) => {
